@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="uz">
+<html lang="uz" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,12 +9,26 @@
 
 *{margin:0;padding:0;box-sizing:border-box;}
 
-:root{
+/* ══════════════ DARK THEME ══════════════ */
+:root,
+[data-theme="dark"]{
   --bg:#070b14;
   --bg2:#0d1422;
   --card:#141e2e;
   --card2:#1a2540;
   --border:#1e2d45;
+  --text:#f0f4ff;
+  --text2:#8899bb;
+  --text3:#4a5878;
+  --shadow:rgba(0,0,0,.4);
+  --hero-from:#070b14;
+  --hero-mid:#0c1828;
+  --hero-to:#080f1f;
+  --hero-glow:rgba(59,130,246,.08);
+  --nav-bg:rgba(7,11,20,.92);
+  --ph-bg:#1a2540;
+  --ph-border:#1e2d45;
+
   --blue:#3b82f6;
   --blue2:#60a5fa;
   --green:#10b981;
@@ -25,10 +39,28 @@
   --red2:#f87171;
   --cyan:#06b6d4;
   --purple:#8b5cf6;
-  --text:#f0f4ff;
-  --text2:#8899bb;
-  --text3:#4a5878;
+
   --nav-h:52px;
+}
+
+/* ══════════════ LIGHT THEME ══════════════ */
+[data-theme="light"]{
+  --bg:#f0f4ff;
+  --bg2:#e4eaf7;
+  --card:#ffffff;
+  --card2:#f5f8ff;
+  --border:#d0d8ec;
+  --text:#0f172a;
+  --text2:#4a5878;
+  --text3:#94a3b8;
+  --shadow:rgba(0,0,0,.1);
+  --hero-from:#dde8ff;
+  --hero-mid:#c8d8f8;
+  --hero-to:#d8e6ff;
+  --hero-glow:rgba(59,130,246,.12);
+  --nav-bg:rgba(240,244,255,.94);
+  --ph-bg:#e8eeff;
+  --ph-border:#c8d0e8;
 }
 
 html{scroll-behavior:smooth;}
@@ -39,6 +71,7 @@ body{
   font-size:14px;
   line-height:1.6;
   overflow-x:hidden;
+  transition:background .35s,color .35s;
 }
 ::-webkit-scrollbar{width:4px;height:4px;}
 ::-webkit-scrollbar-track{background:var(--bg);}
@@ -47,14 +80,15 @@ body{
 /* ── NAV ── */
 #mainNav{
   position:sticky;top:0;z-index:200;
-  background:rgba(7,11,20,.92);
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
+  background:var(--nav-bg);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
   border-bottom:1px solid var(--border);
   height:var(--nav-h);
   display:flex;align-items:center;
   padding:0 1.25rem;
-  gap:1rem;
+  gap:.75rem;
+  transition:background .35s,border-color .35s;
 }
 .nav-brand{
   font-size:13px;font-weight:900;
@@ -63,7 +97,7 @@ body{
   display:flex;align-items:center;gap:6px;
 }
 .nav-dot{
-  width:8px;height:8px;border-radius:50%;
+  width:7px;height:7px;border-radius:50%;
   background:var(--blue2);
   animation:blink 2s ease-in-out infinite;
 }
@@ -75,37 +109,42 @@ body{
 }
 .nav-links::-webkit-scrollbar{display:none;}
 .nav-link{
-  padding:.6rem .85rem;
+  padding:.6rem .8rem;
   font-size:11.5px;font-weight:700;
   color:var(--text2);
   cursor:pointer;
   border-bottom:2px solid transparent;
   white-space:nowrap;
   transition:all .2s;
-  user-select:none;
-  flex-shrink:0;
+  user-select:none;flex-shrink:0;
 }
 .nav-link:hover{color:var(--text);}
 .nav-link.active{color:var(--blue2);border-bottom-color:var(--blue);}
 
+/* ── THEME TOGGLE ── */
+.theme-toggle{
+  display:flex;align-items:center;gap:6px;
+  flex-shrink:0;
+  background:var(--card2);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:4px 10px;
+  cursor:pointer;
+  transition:all .2s;
+  user-select:none;
+}
+.theme-toggle:hover{border-color:var(--blue);}
+.theme-icon{font-size:14px;transition:transform .35s;}
+.theme-label{font-size:11px;font-weight:700;color:var(--text2);white-space:nowrap;}
+
 /* ── SECTIONS ── */
 .section{border-bottom:1px solid var(--border);}
 .wrap{max-width:1080px;margin:0 auto;padding:2.5rem 1.25rem;}
-
-.sec-num{
-  font-size:11px;font-weight:700;color:var(--text3);
-  letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem;
-}
+.sec-num{font-size:11px;font-weight:700;color:var(--text3);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem;}
 .sec-title{font-size:clamp(20px,3vw,30px);font-weight:800;line-height:1.1;}
 .sec-desc{font-size:13px;color:var(--text2);margin-top:.3rem;max-width:520px;}
-.sec-head{
-  display:flex;align-items:flex-start;
-  justify-content:space-between;
-  flex-wrap:wrap;gap:10px;
-  margin-bottom:2rem;
-}
+.sec-head{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:2rem;}
 
-/* ── TAG ── */
 .tag{
   display:inline-flex;align-items:center;
   background:rgba(139,92,246,.1);
@@ -118,13 +157,14 @@ body{
 
 /* ── HERO ── */
 #hero{
-  background:linear-gradient(135deg,#070b14 0%,#0c1828 55%,#080f1f 100%);
+  background:linear-gradient(135deg,var(--hero-from) 0%,var(--hero-mid) 55%,var(--hero-to) 100%);
   position:relative;overflow:hidden;
   border-bottom:1px solid var(--border);
+  transition:background .35s;
 }
 #hero::before{
   content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse 55% 55% at 72% 40%,rgba(59,130,246,.08),transparent 70%);
+  background:radial-gradient(ellipse 55% 55% at 72% 40%,var(--hero-glow),transparent 70%);
   pointer-events:none;
 }
 .hero-inner{max-width:1080px;margin:0 auto;padding:3.5rem 1.25rem 2.5rem;}
@@ -136,44 +176,24 @@ body{
   letter-spacing:.08em;text-transform:uppercase;
   padding:5px 14px;border-radius:20px;margin-bottom:1.25rem;
 }
-.hero-title{
-  font-size:clamp(26px,5vw,52px);
-  font-weight:900;line-height:1.08;margin-bottom:.4rem;
-}
+.hero-title{font-size:clamp(26px,5vw,52px);font-weight:900;line-height:1.08;margin-bottom:.4rem;}
 .hero-sub{font-size:14px;color:var(--text2);margin-bottom:2rem;}
 
 .dim-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
+  display:grid;grid-template-columns:repeat(3,1fr);
   gap:1px;background:var(--border);
-  border-radius:14px;overflow:hidden;
-  margin-bottom:1.5rem;
+  border-radius:14px;overflow:hidden;margin-bottom:1.5rem;
 }
-.dim-card{
-  background:var(--card);
-  padding:1.25rem 1rem;text-align:center;
-}
-.dim-label{
-  font-size:11px;font-weight:600;
-  color:var(--text3);text-transform:uppercase;
-  letter-spacing:.08em;margin-bottom:.3rem;
-}
-.dim-val{
-  font-size:clamp(28px,4.5vw,42px);
-  font-weight:900;color:var(--blue2);line-height:1;
-}
+.dim-card{background:var(--card);padding:1.25rem 1rem;text-align:center;transition:background .35s;}
+.dim-label{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem;}
+.dim-val{font-size:clamp(28px,4.5vw,42px);font-weight:900;color:var(--blue2);line-height:1;}
 .dim-unit{font-size:12px;color:var(--text2);margin-top:2px;}
 
-.stats-row{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
-  gap:10px;
-}
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;}
 .s-card{
   background:var(--card);border:1px solid var(--border);
   border-radius:12px;padding:.9rem 1rem;
-  transition:border-color .2s,transform .15s;
-  cursor:default;
+  transition:border-color .2s,transform .15s,background .35s;cursor:default;
 }
 .s-card:hover{border-color:var(--blue);transform:translateY(-2px);}
 .s-icon{font-size:18px;margin-bottom:5px;}
@@ -181,11 +201,12 @@ body{
 .s-lbl{font-size:11px;color:var(--text2);margin-top:2px;}
 
 .img-ph{
-  background:var(--card2);border:1px dashed var(--border);
+  background:var(--ph-bg);border:1px dashed var(--ph-border);
   border-radius:12px;
   display:flex;align-items:center;justify-content:center;
   flex-direction:column;gap:6px;
   color:var(--text3);font-size:12px;text-align:center;
+  transition:background .35s;
 }
 
 /* ── COLORS ── */
@@ -196,11 +217,11 @@ body{
 .c-cyan{color:var(--cyan);}
 .c-purple{color:var(--purple);}
 
-/* ── POWER SECTION ── */
+/* ── POWER ── */
 .power-main{
   background:var(--card);border:1px solid var(--border);
   border-radius:14px;padding:1.75rem;margin-bottom:1.25rem;
-  position:relative;overflow:hidden;
+  position:relative;overflow:hidden;transition:background .35s;
 }
 .power-main::after{
   content:'';position:absolute;top:-30px;right:-30px;
@@ -208,155 +229,74 @@ body{
   background:radial-gradient(circle,rgba(59,130,246,.07),transparent 70%);
   pointer-events:none;
 }
-.power-total{
-  font-size:clamp(36px,6vw,62px);
-  font-weight:900;color:var(--blue2);line-height:1;
-}
+.power-total{font-size:clamp(36px,6vw,62px);font-weight:900;color:var(--blue2);line-height:1;}
 .power-unit{font-size:18px;color:var(--text2);font-weight:600;}
 .power-sub{font-size:12px;color:var(--text2);margin-top:.4rem;}
 
 .bar-rows{display:flex;flex-direction:column;gap:10px;margin-top:1.5rem;}
 .bar-row{display:flex;align-items:center;gap:8px;}
-.bar-name{
-  font-size:11.5px;color:var(--text2);
-  width:130px;flex-shrink:0;text-align:right;
-}
-.bar-track{
-  flex:1;height:7px;background:var(--border);
-  border-radius:4px;overflow:hidden;min-width:0;
-}
+.bar-name{font-size:11.5px;color:var(--text2);width:130px;flex-shrink:0;text-align:right;}
+.bar-track{flex:1;height:7px;background:var(--border);border-radius:4px;overflow:hidden;min-width:0;}
 .bar-fill{height:100%;border-radius:4px;width:0;transition:width 1s cubic-bezier(.4,0,.2,1);}
 .bar-val{font-size:12px;font-weight:700;width:55px;flex-shrink:0;}
 
-.cost-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:12px;margin-bottom:1.25rem;
-}
-.cost-card{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:12px;padding:1.25rem;
-}
-.cost-season{
-  font-size:11px;font-weight:700;color:var(--text3);
-  text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem;
-}
+.cost-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:1.25rem;}
+.cost-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;transition:background .35s;}
+.cost-season{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem;}
 .cost-amount{font-size:clamp(20px,3vw,28px);font-weight:900;}
 .cost-note{font-size:11px;color:var(--text2);margin-top:3px;}
 
-.detail-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
-  gap:10px;
-}
+.detail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;}
 
 /* ── PRESSURE ── */
-.pressure-modes{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(110px,1fr));
-  gap:10px;margin-bottom:1.25rem;
-}
+.pressure-modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:1.25rem;}
 .p-mode{
   background:var(--card);border:2px solid var(--border);
   border-radius:12px;padding:1rem .75rem;
-  cursor:pointer;text-align:center;
-  transition:all .2s;
+  cursor:pointer;text-align:center;transition:all .2s;
 }
 .p-mode:hover{border-color:rgba(59,130,246,.5);}
 .p-mode.active{border-color:var(--blue);background:rgba(59,130,246,.08);}
 .p-pa{font-size:22px;font-weight:900;color:var(--blue2);}
 .p-unit{font-size:10px;color:var(--text3);margin-bottom:2px;}
 .p-name{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;}
-.p-badge{
-  font-size:10px;padding:2px 8px;
-  border-radius:10px;margin-top:.4rem;
-  display:inline-block;font-weight:600;
-}
+.p-badge{font-size:10px;padding:2px 8px;border-radius:10px;margin-top:.4rem;display:inline-block;font-weight:600;}
 
-.mode-info{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;
-}
+.mode-info{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;transition:background .35s;}
 .mode-val{font-size:20px;font-weight:800;margin-top:.2rem;}
 .mode-desc{font-size:12px;color:var(--text2);margin-top:.4rem;line-height:1.6;}
 
-.agg-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:12px;
-}
-.agg-card{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:12px;padding:1.25rem;
-}
+.agg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
+.agg-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;transition:background .35s;}
 .agg-title{font-size:15px;font-weight:800;}
 .agg-sub{font-size:11px;color:var(--text3);margin-top:1px;}
-.agg-badge{
-  font-size:10px;font-weight:700;padding:3px 9px;
-  border-radius:6px;
-}
+.agg-badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:6px;}
 .agg-kw{font-size:32px;font-weight:900;}
 .agg-info{font-size:12px;color:var(--text2);margin-top:3px;}
 .agg-dots{display:flex;gap:6px;margin-top:.75rem;}
 .agg-dot{width:22px;height:22px;border-radius:6px;opacity:.75;}
-.agg-pct-bar{
-  height:5px;background:var(--border);border-radius:3px;
-  overflow:hidden;margin-top:2px;
-}
+.agg-pct-bar{height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:2px;}
 .agg-pct-fill{height:100%;border-radius:3px;}
 
 /* ── HVAC ── */
-.hvac-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
-  gap:14px;
-}
-.hvac-card{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:14px;overflow:hidden;
-}
-.hvac-header{
-  background:var(--card2);padding:.9rem 1.2rem;
-  border-bottom:1px solid var(--border);
-  display:flex;align-items:center;gap:10px;
-}
-.hvac-icon{
-  width:36px;height:36px;border-radius:10px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:16px;flex-shrink:0;
-}
+.hvac-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px;}
+.hvac-card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:background .35s;}
+.hvac-header{background:var(--card2);padding:.9rem 1.2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;transition:background .35s;}
+.hvac-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
 .hvac-body{padding:1.2rem;}
 .dots-row{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:.75rem;}
-.c-dot{
-  width:36px;height:36px;border-radius:8px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:9.5px;font-weight:700;cursor:pointer;
-  transition:all .18s;
-}
+.c-dot{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:700;cursor:pointer;transition:all .18s;}
 .c-dot:hover{transform:scale(1.1);}
-.p-dot{
-  width:42px;height:42px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:9.5px;font-weight:700;cursor:pointer;
-  transition:all .18s;
-}
+.p-dot{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:700;cursor:pointer;transition:all .18s;}
 .p-dot:hover{transform:scale(1.1);}
-.info-row{
-  display:flex;justify-content:space-between;
-  align-items:center;padding:6px 0;
-  border-bottom:1px solid var(--border);
-}
+.info-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);}
 .info-row:last-child{border-bottom:none;}
 .info-key{font-size:12px;color:var(--text2);}
 .info-val{font-size:12px;font-weight:700;}
 .dot-status{font-size:12px;font-weight:600;margin-bottom:.75rem;}
 
 /* ── LED ── */
-.led-header{
-  display:flex;align-items:center;
-  justify-content:space-between;
-  flex-wrap:wrap;gap:10px;margin-bottom:1rem;
-}
+.led-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:1rem;}
 .led-grid{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:.75rem;}
 .led-block{
   width:clamp(24px,5.5vw,28px);height:clamp(24px,5.5vw,28px);
@@ -366,12 +306,9 @@ body{
 }
 .led-block:hover{transform:scale(1.18);}
 .led-toggler{
-  background:rgba(245,158,11,.08);
-  border:1px solid rgba(245,158,11,.25);
-  color:var(--amber2);font-size:12px;
-  font-weight:700;padding:5px 12px;
-  border-radius:8px;cursor:pointer;
-  white-space:nowrap;
+  background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);
+  color:var(--amber2);font-size:12px;font-weight:700;padding:5px 12px;
+  border-radius:8px;cursor:pointer;white-space:nowrap;
 }
 .led-stats{display:flex;gap:16px;flex-wrap:wrap;}
 .led-stat{font-size:12px;color:var(--text2);}
@@ -383,34 +320,17 @@ body{
   border-radius:14px;padding:1.75rem;
   margin-bottom:1.25rem;position:relative;overflow:hidden;
 }
-.em-banner::before{
-  content:'⚡';position:absolute;
-  right:1.5rem;top:50%;transform:translateY(-50%);
-  font-size:72px;opacity:.05;pointer-events:none;
-}
+.em-banner::before{content:'⚡';position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);font-size:72px;opacity:.05;pointer-events:none;}
 .em-title{font-size:18px;font-weight:800;color:var(--red2);margin-bottom:.4rem;}
 .em-desc{font-size:13px;color:var(--text2);max-width:480px;line-height:1.6;}
 .em-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:1rem;}
-.em-btn{
-  background:var(--card2);border:1px solid var(--border);
-  color:var(--text2);font-size:12px;font-weight:700;
-  padding:6px 14px;border-radius:8px;cursor:pointer;
-  transition:all .2s;
-}
+.em-btn{background:var(--card2);border:1px solid var(--border);color:var(--text2);font-size:12px;font-weight:700;padding:6px 14px;border-radius:8px;cursor:pointer;transition:all .2s;}
 .em-btn:hover{border-color:var(--red);}
 .em-btn.on{background:rgba(239,68,68,.1);border-color:var(--red);color:var(--red2);}
 .em-status{font-size:12px;font-weight:700;}
 
-.gen-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:14px;margin-bottom:1.25rem;
-}
-.gen-card{
-  background:var(--card);
-  border:2px solid rgba(239,68,68,.2);
-  border-radius:14px;padding:1.4rem;
-}
+.gen-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:1.25rem;}
+.gen-card{background:var(--card);border:2px solid rgba(239,68,68,.2);border-radius:14px;padding:1.4rem;transition:background .35s;}
 .gen-model{font-size:11px;font-weight:700;color:var(--red2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.2rem;}
 .gen-name{font-size:13px;color:var(--text2);margin-bottom:.9rem;}
 .gen-kw{font-size:36px;font-weight:900;color:var(--red2);}
@@ -419,74 +339,34 @@ body{
 .gen-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--amber));border-radius:3px;width:0;transition:width 1s .2s;}
 .gen-info{font-size:11px;color:var(--text2);margin-top:.4rem;}
 .gen-tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:.75rem;}
-.gen-tag{
-  font-size:10px;
-  background:rgba(239,68,68,.07);
-  border:1px solid rgba(239,68,68,.18);
-  color:var(--red2);padding:2px 8px;border-radius:5px;
-}
+.gen-tag{font-size:10px;background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.18);color:var(--red2);padding:2px 8px;border-radius:5px;}
 
-.sw-diagram{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:14px;padding:1.5rem;
-}
+.sw-diagram{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;transition:background .35s;}
 .sw-title{font-size:12px;font-weight:700;color:var(--text2);text-align:center;margin-bottom:1.25rem;text-transform:uppercase;letter-spacing:.08em;}
 .sw-flow{display:flex;align-items:center;justify-content:center;gap:4px;flex-wrap:wrap;}
-.sw-node{
-  background:var(--card2);border:1px solid var(--border);
-  border-radius:10px;padding:.55rem .9rem;
-  text-align:center;font-size:11px;font-weight:700;
-  color:var(--text2);min-width:72px;transition:all .3s;
-}
+.sw-node{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:.55rem .9rem;text-align:center;font-size:11px;font-weight:700;color:var(--text2);min-width:72px;transition:all .3s;}
 .sw-node.s-on{border-color:var(--green);color:var(--green2);background:rgba(16,185,129,.07);}
 .sw-node.s-warn{border-color:var(--red);color:var(--red2);background:rgba(239,68,68,.07);}
 .sw-node.s-emg{border-color:var(--amber);color:var(--amber2);background:rgba(245,158,11,.07);}
 .sw-arr{width:28px;height:2px;background:var(--border);position:relative;flex-shrink:0;transition:background .3s;}
 .sw-arr::after{content:'';position:absolute;right:-5px;top:-4px;width:0;height:0;border-left:8px solid var(--border);border-top:5px solid transparent;border-bottom:5px solid transparent;transition:border-left-color .3s;}
-.sw-arr.a-on{background:var(--green2);}
-.sw-arr.a-on::after{border-left-color:var(--green2);}
-.sw-arr.a-emg{background:var(--amber2);}
-.sw-arr.a-emg::after{border-left-color:var(--amber2);}
+.sw-arr.a-on{background:var(--green2);}.sw-arr.a-on::after{border-left-color:var(--green2);}
+.sw-arr.a-emg{background:var(--amber2);}.sw-arr.a-emg::after{border-left-color:var(--amber2);}
 .sw-note{font-size:11px;color:var(--text2);text-align:center;margin-top:.75rem;}
-.sw-time{
-  background:rgba(16,185,129,.08);
-  border:1px solid rgba(16,185,129,.22);
-  color:var(--green2);font-size:11px;font-weight:700;
-  padding:5px 14px;border-radius:20px;
-  text-align:center;margin-top:1rem;
-  display:block;transition:all .35s;
-}
+.sw-time{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.22);color:var(--green2);font-size:11px;font-weight:700;padding:5px 14px;border-radius:20px;text-align:center;margin-top:1rem;display:block;transition:all .35s;}
 
 /* ── HISOB-KITOB ── */
-.season-tabs{
-  display:flex;background:var(--card);
-  border:1px solid var(--border);border-radius:12px;
-  overflow:hidden;margin-bottom:1.5rem;
-}
-.s-tab{
-  flex:1;padding:.7rem .5rem;font-size:12px;
-  font-weight:700;text-align:center;
-  cursor:pointer;color:var(--text2);
-  transition:all .2s;border-right:1px solid var(--border);
-  white-space:nowrap;
-}
+.season-tabs{display:flex;background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:1.5rem;transition:background .35s;}
+.s-tab{flex:1;padding:.7rem .5rem;font-size:12px;font-weight:700;text-align:center;cursor:pointer;color:var(--text2);transition:all .2s;border-right:1px solid var(--border);white-space:nowrap;}
 .s-tab:last-child{border-right:none;}
 .s-tab.tab-summer{background:rgba(245,158,11,.12);color:var(--amber2);}
 .s-tab.tab-spring{background:rgba(16,185,129,.1);color:var(--green2);}
-.s-tab:hover:not(.tab-summer):not(.tab-spring){color:var(--text);}
 
 .s-panel{display:none;}
 .s-panel.active{display:block;}
 
-.season-hero{
-  border-radius:14px;padding:1.75rem;
-  margin-bottom:1.25rem;border:1px solid;
-}
-.season-hero-inner{
-  display:flex;align-items:flex-start;
-  justify-content:space-between;
-  flex-wrap:wrap;gap:12px;
-}
+.season-hero{border-radius:14px;padding:1.75rem;margin-bottom:1.25rem;border:1px solid;}
+.season-hero-inner{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;}
 .sh-badge{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem;}
 .sh-desc{font-size:13px;color:var(--text2);max-width:440px;line-height:1.6;}
 .sh-right{text-align:right;flex-shrink:0;}
@@ -494,96 +374,66 @@ body{
 .sh-kwh{font-size:28px;font-weight:900;line-height:1;}
 .sh-sum{font-size:13px;font-weight:700;margin-top:3px;}
 
-.kpi-row{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-  gap:10px;margin-bottom:1.5rem;
-}
-.kpi-card{
-  background:rgba(255,255,255,.025);
-  border:1px solid var(--border);
-  border-radius:10px;padding:1rem;
-}
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:1.5rem;}
+.kpi-card{background:rgba(255,255,255,.025);border:1px solid var(--border);border-radius:10px;padding:1rem;transition:background .35s;}
+[data-theme="light"] .kpi-card{background:rgba(0,0,0,.025);}
 .kpi-label{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.3rem;}
 .kpi-val{font-size:20px;font-weight:800;line-height:1.1;}
 .kpi-sub{font-size:10px;color:var(--text3);margin-top:3px;}
 
-/* Table */
 .tbl-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border);}
 table{width:100%;border-collapse:collapse;font-size:12.5px;}
 thead tr{background:var(--card2);}
-th{
-  padding:.75rem 1rem;text-align:left;
-  font-size:10.5px;font-weight:700;color:var(--text2);
-  text-transform:uppercase;letter-spacing:.08em;
-  border-bottom:1px solid var(--border);white-space:nowrap;
-}
+th{padding:.75rem 1rem;text-align:left;font-size:10.5px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid var(--border);white-space:nowrap;}
 td{padding:.75rem 1rem;border-bottom:1px solid var(--border);vertical-align:middle;}
 tbody tr:last-child td{border-bottom:none;}
-tbody tr:hover td{background:rgba(255,255,255,.02);}
+tbody tr:hover td{background:rgba(59,130,246,.04);}
 .total-row td{background:rgba(255,255,255,.03);font-weight:800;}
+[data-theme="light"] .total-row td{background:rgba(0,0,0,.03);}
 .num{font-weight:700;}
 .dimmed td{color:var(--text3);}
 
-/* Vis bars */
 .vis-section{margin-top:1.5rem;}
 .vis-label{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem;}
 .vis-rows{display:flex;flex-direction:column;gap:9px;}
 .vis-row{display:flex;align-items:center;gap:8px;}
 .vis-name{font-size:11.5px;color:var(--text2);width:130px;flex-shrink:0;text-align:right;}
-.vis-track{
-  flex:1;height:22px;background:var(--border);
-  border-radius:6px;overflow:hidden;min-width:0;position:relative;
-}
-.vis-fill{
-  height:100%;border-radius:6px;
-  display:flex;align-items:center;padding-left:8px;
-  font-size:10px;font-weight:700;color:rgba(255,255,255,.9);
-  width:0;transition:width 1s cubic-bezier(.4,0,.2,1);
-  white-space:nowrap;overflow:hidden;
-}
+.vis-track{flex:1;height:22px;background:var(--border);border-radius:6px;overflow:hidden;min-width:0;position:relative;}
+.vis-fill{height:100%;border-radius:6px;display:flex;align-items:center;padding-left:8px;font-size:10px;font-weight:700;color:rgba(255,255,255,.9);width:0;transition:width 1s cubic-bezier(.4,0,.2,1);white-space:nowrap;overflow:hidden;}
 .vis-mln{font-size:12px;font-weight:700;width:80px;flex-shrink:0;text-align:right;}
 
-/* Compare cards */
-.compare-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:12px;margin-bottom:1.5rem;
-}
-.cmp-card{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:12px;padding:1.2rem;text-align:center;
-}
+.compare-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:1.5rem;}
+.cmp-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.2rem;text-align:center;transition:background .35s;}
 .cmp-season{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem;}
 .cmp-mln{font-size:26px;font-weight:900;line-height:1;}
 .cmp-kwh{font-size:11px;color:var(--text2);margin-top:4px;}
 
-.saving-box{
-  background:rgba(16,185,129,.05);
-  border:1px solid rgba(16,185,129,.18);
-  border-radius:12px;padding:1.2rem;
-  margin-top:1.25rem;
-  display:flex;align-items:center;
-  justify-content:space-between;flex-wrap:wrap;gap:10px;
-}
+.saving-box{background:rgba(16,185,129,.05);border:1px solid rgba(16,185,129,.18);border-radius:12px;padding:1.2rem;margin-top:1.25rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
 .saving-label{font-size:11px;font-weight:700;color:var(--green2);margin-bottom:.2rem;}
 .saving-desc{font-size:12px;color:var(--text2);}
 .saving-val{font-size:26px;font-weight:900;color:var(--green2);text-align:right;}
 .saving-sub{font-size:11px;color:var(--text2);text-align:right;margin-top:2px;}
 
 /* ── FOOTER ── */
-footer{
-  background:var(--bg2);border-top:1px solid var(--border);
-  padding:2rem 1.25rem;text-align:center;
-  font-size:11px;color:var(--text3);
-}
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 1.25rem;text-align:center;font-size:11px;color:var(--text3);transition:background .35s;}
 .foot-inner{max-width:1080px;margin:0 auto;}
 .foot-brand{font-size:13px;font-weight:800;color:var(--blue2);margin-bottom:.4rem;}
+
+/* ── LIGHT MODE SPECIFIC TWEAKS ── */
+[data-theme="light"] .em-banner{background:linear-gradient(135deg,rgba(239,68,68,.05),rgba(245,158,11,.03));}
+[data-theme="light"] .sw-node.s-on{background:rgba(16,185,129,.06);}
+[data-theme="light"] .sw-node.s-warn{background:rgba(239,68,68,.06);}
+[data-theme="light"] .sw-node.s-emg{background:rgba(245,158,11,.06);}
+[data-theme="light"] .gen-card{border-color:rgba(239,68,68,.15);}
+[data-theme="light"] .hero-badge{background:rgba(59,130,246,.08);}
+[data-theme="light"] .p-mode.active{background:rgba(59,130,246,.06);}
 
 /* ── RESPONSIVE ── */
 @media(max-width:600px){
   :root{--nav-h:48px;}
-  .nav-link{padding:.55rem .7rem;font-size:11px;}
+  .nav-link{padding:.55rem .65rem;font-size:10.5px;}
+  .theme-label{display:none;}
+  .theme-toggle{padding:5px 8px;}
   .wrap{padding:1.75rem 1rem;}
   .hero-inner{padding:2.5rem 1rem 2rem;}
   .bar-name{width:90px;font-size:10.5px;}
@@ -611,6 +461,11 @@ footer{
     <div class="nav-link" data-sec="lighting">Yoritish</div>
     <div class="nav-link" data-sec="emergency">Favqulodda</div>
     <div class="nav-link" data-sec="calculation">Hisob-kitob</div>
+  </div>
+  <!-- THEME TOGGLE -->
+  <div class="theme-toggle" id="themeToggle" onclick="toggleTheme()">
+    <span class="theme-icon" id="themeIcon">🌙</span>
+    <span class="theme-label" id="themeLabel">Tungi</span>
   </div>
 </nav>
 
@@ -667,23 +522,13 @@ footer{
       </div>
     </div>
 
-    <div class="img-ph" style="
-  height: 450px;
-  margin-top:1.5rem;
-  background-image: url('/images/ko\'rinish.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-">
-  <div style="font-size:28px;opacity:.8;"></div>
-  <div>Stadion tashqi ko'rinishi rasmi</div>
-  <div style="font-size:10px;opacity:.7;">110 × 78 × 27 m · Pneumatik qoplayli</div>
-</div>
+    <div class="img-ph" style="height:450px;margin-top:1.5rem;
+      background-image:url('/images/ko\'rinish.png');
+      background-size:cover;background-position:center;background-repeat:no-repeat;">
+      <div style="font-size:28px;opacity:.4;"></div>
+      <div>Stadion tashqi ko'rinishi rasmi</div>
+      <div style="font-size:10px;opacity:.6;">110 × 78 × 27 m · Pneumatik qoplayli</div>
+    </div>
   </div>
 </div>
 
@@ -715,7 +560,7 @@ footer{
       <div class="cost-card">
         <div class="cost-season">🍃 Bahor/Kuz oylik xarajat</div>
         <div class="cost-amount c-green">~21.1 <span style="font-size:13px;color:var(--text2);">mln so'm</span></div>
-        <div class="cost-note">~21,060 kWh/oy · Yozga -67%</div>
+        <div class="cost-note">~21,060 kWh/oy · Yozga −67%</div>
       </div>
     </div>
 
@@ -759,48 +604,35 @@ footer{
     <div style="font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem;">Bosim rejimlari</div>
     <div class="pressure-modes" id="pressureModes">
       <div class="p-mode" onclick="selMode(0)">
-        <div class="p-unit">Pa</div>
-        <div class="p-pa">250</div>
-        <div class="p-name">Minimal</div>
+        <div class="p-unit">Pa</div><div class="p-pa">250</div><div class="p-name">Minimal</div>
         <div class="p-badge" style="background:rgba(16,185,129,.12);color:var(--green2);">Minimal yuk</div>
       </div>
       <div class="p-mode" onclick="selMode(1)">
-        <div class="p-unit">Pa</div>
-        <div class="p-pa">500</div>
-        <div class="p-name">Normal</div>
+        <div class="p-unit">Pa</div><div class="p-pa">500</div><div class="p-name">Normal</div>
         <div class="p-badge" style="background:rgba(6,182,212,.12);color:var(--cyan);">Oddiy ish</div>
       </div>
-      <div class="p-mode" onclick="selMode(2)">
-        <div class="p-unit">Pa</div>
-        <div class="p-pa">750</div>
-        <div class="p-name">Yuqori</div>
+      <div class="p-mode active" onclick="selMode(2)">
+        <div class="p-unit">Pa</div><div class="p-pa">750</div><div class="p-name">Yuqori</div>
         <div class="p-badge" style="background:rgba(245,158,11,.12);color:var(--amber2);">Faol rejim</div>
       </div>
-      
     </div>
 
     <div class="mode-info">
       <div style="font-size:11px;color:var(--text2);">Tanlangan rejim:</div>
-      <div class="mode-val" id="modeVal" style="color:var(--red2);">750 Pa — Yuqori bosim</div>
-      <div class="mode-desc" id="modeDesc">Barcha agregatlar to'liq quvvatda ishlaydi. Stadion musobaqaga tayyorlash uchun maksimal bosim ta'minlanadi.</div>
+      <div class="mode-val" id="modeVal" style="color:var(--amber2);">750 Pa — Yuqori bosim</div>
+      <div class="mode-desc" id="modeDesc">Kuchaytirilgan rejim: barcha agregatlar to'liq kuchda ishlaydi. Katta tadbirlar va musobaqalar uchun.</div>
     </div>
 
     <div style="font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem;">Havo Agregatlari</div>
     <div class="agg-grid">
       <div class="agg-card">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem;">
-          <div>
-            <div class="agg-title">ZK50</div>
-            <div class="agg-sub">2 × agregat</div>
-          </div>
+          <div><div class="agg-title">ZK50</div><div class="agg-sub">2 × agregat</div></div>
           <div class="agg-badge" style="background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25);color:var(--blue2);">Asosiy</div>
         </div>
         <div class="agg-kw c-blue">30 <span style="font-size:14px;color:var(--text2);font-weight:600;">kW/dona</span></div>
         <div class="agg-info">Jami: <strong class="c-blue">60 kW</strong></div>
-        <div class="agg-dots">
-          <div class="agg-dot" style="background:var(--blue);"></div>
-          <div class="agg-dot" style="background:var(--blue);"></div>
-        </div>
+        <div class="agg-dots"><div class="agg-dot" style="background:var(--blue);"></div><div class="agg-dot" style="background:var(--blue);"></div></div>
         <div style="margin-top:10px;">
           <div style="font-size:10px;color:var(--text2);margin-bottom:3px;">Quvvat ulushi (60/315 = 19%)</div>
           <div class="agg-pct-bar"><div class="agg-pct-fill" style="width:19%;background:var(--blue);"></div></div>
@@ -808,18 +640,12 @@ footer{
       </div>
       <div class="agg-card">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem;">
-          <div>
-            <div class="agg-title">ZK30</div>
-            <div class="agg-sub">2 × agregat</div>
-          </div>
+          <div><div class="agg-title">ZK30</div><div class="agg-sub">2 × agregat</div></div>
           <div class="agg-badge" style="background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.25);color:var(--cyan);">Qo'shimcha</div>
         </div>
         <div class="agg-kw c-cyan">11 <span style="font-size:14px;color:var(--text2);font-weight:600;">kW/dona</span></div>
         <div class="agg-info">Jami: <strong class="c-cyan">22 kW</strong></div>
-        <div class="agg-dots">
-          <div class="agg-dot" style="background:var(--cyan);"></div>
-          <div class="agg-dot" style="background:var(--cyan);"></div>
-        </div>
+        <div class="agg-dots"><div class="agg-dot" style="background:var(--cyan);"></div><div class="agg-dot" style="background:var(--cyan);"></div></div>
         <div style="margin-top:10px;">
           <div style="font-size:10px;color:var(--text2);margin-bottom:3px;">Quvvat ulushi (22/315 = 7%)</div>
           <div class="agg-pct-bar"><div class="agg-pct-fill" style="width:7%;background:var(--cyan);"></div></div>
@@ -844,16 +670,11 @@ footer{
         <div class="sec-desc">Haier Chiller va gidravlik nasoslar — mikroklimat ta'minoti</div>
       </div>
     </div>
-
     <div class="hvac-grid">
-      <!-- CHILLERS -->
       <div class="hvac-card">
         <div class="hvac-header">
           <div class="hvac-icon" style="background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.22);">❄️</div>
-          <div>
-            <div style="font-size:14px;font-weight:800;">Haier Chiller</div>
-            <div style="font-size:11px;color:var(--text2);">8 ta · Paralel ulangan</div>
-          </div>
+          <div><div style="font-size:14px;font-weight:800;">Haier Chiller</div><div style="font-size:11px;color:var(--text2);">8 ta · Paralel ulangan</div></div>
         </div>
         <div class="hvac-body">
           <div style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem;">Holat (bosing)</div>
@@ -866,15 +687,10 @@ footer{
           <div class="info-row"><span class="info-key">Jami quvvat</span><span class="info-val c-green">~224 kW</span></div>
         </div>
       </div>
-
-      <!-- PUMPS -->
       <div class="hvac-card">
         <div class="hvac-header">
           <div class="hvac-icon" style="background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.22);">🌊</div>
-          <div>
-            <div style="font-size:14px;font-weight:800;">Gidravlik Nasoslar</div>
-            <div style="font-size:11px;color:var(--text2);">4 ta · Sovuq suv sirkuLyatsiyasi</div>
-          </div>
+          <div><div style="font-size:14px;font-weight:800;">Gidravlik Nasoslar</div><div style="font-size:11px;color:var(--text2);">4 ta · Sovuq suv sirkuLyatsiyasi</div></div>
         </div>
         <div class="hvac-body">
           <div style="font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem;">Holat (bosing)</div>
@@ -888,7 +704,6 @@ footer{
         </div>
       </div>
     </div>
-
     <div class="img-ph" style="height:120px;margin-top:1rem;">
       <div style="font-size:22px;opacity:.35;">🔄</div>
       <div>HVAC sirkuLyatsiya sxemasi</div>
@@ -908,14 +723,11 @@ footer{
       </div>
       <div class="tag">9 kW jami</div>
     </div>
-
-    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;">
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;transition:background .35s;">
       <div class="led-header">
         <div>
           <div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">30 × LED blok · har biri 0.3 kW</div>
-          <div style="font-size:26px;font-weight:900;color:var(--amber2);" id="ledPowerDisplay">
-            9.0 kW <span style="font-size:13px;color:var(--text2);">jami</span>
-          </div>
+          <div style="font-size:26px;font-weight:900;color:var(--amber2);" id="ledPowerDisplay">9.0 kW <span style="font-size:13px;color:var(--text2);">jami</span></div>
         </div>
         <button class="led-toggler" onclick="toggleAllLED()" id="ledToggleBtn">Hammasini o'chir</button>
       </div>
@@ -939,20 +751,14 @@ footer{
         <div class="sec-desc">Asosiy elektr uzilganda generatorlar avtomatik yoqiladi</div>
       </div>
     </div>
-
     <div class="em-banner">
       <div class="em-title">⚡ Elektr Uzilish Holati</div>
-      <div class="em-desc">
-        Asosiy tarmoq uzilishi bilan MetaSpace tizimi
-        <strong style="color:var(--amber2);">2 soniya ichida</strong>
-        Weichai WP4.1 generatorlarini avtomatik ishga tushiradi.
-      </div>
+      <div class="em-desc">Asosiy tarmoq uzilishi bilan MetaSpace tizimi <strong style="color:var(--amber2);">2 soniya ichida</strong> Weichai WP4.1 generatorlarini avtomatik ishga tushiradi.</div>
       <div class="em-controls">
         <button class="em-btn" id="emergBtn" onclick="toggleEmergency()">🔴 Avariya rejimini yoq</button>
         <span class="em-status c-green" id="emergStatus">✓ Asosiy tarmoq faol</span>
       </div>
     </div>
-
     <div class="gen-grid">
       <div class="gen-card">
         <div class="gen-model">Weichai WP4.1</div>
@@ -960,11 +766,7 @@ footer{
         <div class="gen-kw">113 <span class="gen-kw-unit">kW</span></div>
         <div class="gen-bar"><div class="gen-fill" id="gen1fill"></div></div>
         <div class="gen-info" id="gen1info">Kutish rejimida · Tayyor</div>
-        <div class="gen-tags">
-          <div class="gen-tag">3 fazali</div>
-          <div class="gen-tag">Avtomatik start</div>
-          <div class="gen-tag">Dizel</div>
-        </div>
+        <div class="gen-tags"><div class="gen-tag">3 fazali</div><div class="gen-tag">Avtomatik start</div><div class="gen-tag">Dizel</div></div>
       </div>
       <div class="gen-card">
         <div class="gen-model">Weichai WP4.1</div>
@@ -972,14 +774,9 @@ footer{
         <div class="gen-kw">113 <span class="gen-kw-unit">kW</span></div>
         <div class="gen-bar"><div class="gen-fill" id="gen2fill"></div></div>
         <div class="gen-info" id="gen2info">Kutish rejimida · Tayyor</div>
-        <div class="gen-tags">
-          <div class="gen-tag">3 fazali</div>
-          <div class="gen-tag">Avtomatik start</div>
-          <div class="gen-tag">Dizel</div>
-        </div>
+        <div class="gen-tags"><div class="gen-tag">3 fazali</div><div class="gen-tag">Avtomatik start</div><div class="gen-tag">Dizel</div></div>
       </div>
     </div>
-
     <div class="sw-diagram">
       <div class="sw-title">Elektr uzatish sxemasi</div>
       <div class="sw-flow">
@@ -992,7 +789,6 @@ footer{
       <div class="sw-note">Zaxira quvvat: <strong class="c-red">113 + 113 = 226 kW</strong></div>
       <div class="sw-time" id="swTime">✓ Asosiy tarmoq · Uzluksiz ta'minot</div>
     </div>
-
     <div class="img-ph" style="height:110px;margin-top:1.5rem;">
       <div style="font-size:22px;opacity:.35;">⚡</div>
       <div>Generator xonasi va elektr sxemasi rasmi</div>
@@ -1012,7 +808,6 @@ footer{
       <div class="tag">Mavsumiy tahlil</div>
     </div>
 
-    <!-- Compare summary -->
     <div class="compare-grid">
       <div class="cmp-card">
         <div class="cmp-season">☀️ Yoz (Iyn–Avg)</div>
@@ -1031,13 +826,12 @@ footer{
       </div>
     </div>
 
-    <!-- Tabs -->
     <div class="season-tabs">
       <div class="s-tab tab-summer" id="tabSummer" onclick="selSeason('summer')">☀️ Yozgi mavsum</div>
       <div class="s-tab" id="tabSpring" onclick="selSeason('spring')">🍃 Bahor / Kuz</div>
     </div>
 
-    <!-- SUMMER PANEL -->
+    <!-- SUMMER -->
     <div class="s-panel active" id="panelSummer">
       <div class="season-hero" style="background:linear-gradient(135deg,rgba(245,158,11,.07),rgba(239,68,68,.04));border-color:rgba(245,158,11,.22);">
         <div class="season-hero-inner">
@@ -1052,105 +846,34 @@ footer{
           </div>
         </div>
       </div>
-
       <div class="kpi-row">
-        <div class="kpi-card">
-          <div class="kpi-label">Kunlik sarflanish</div>
-          <div class="kpi-val c-amber">2,094 kWh</div>
-          <div class="kpi-sub">2,094,000 so'm/kun</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-label">Oylik sarflanish</div>
-          <div class="kpi-val c-amber">~62,820 kWh</div>
-          <div class="kpi-sub">30 kunlik hisob</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-label">Oylik xarajat</div>
-          <div class="kpi-val c-amber">~62.8 mln</div>
-          <div class="kpi-sub">1 kWh ≈ 1,000 so'm</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-label">Chiller ishlash</div>
-          <div class="kpi-val c-red">12–14 soat</div>
-          <div class="kpi-sub">Kunlik o'rtacha</div>
-        </div>
+        <div class="kpi-card"><div class="kpi-label">Kunlik sarflanish</div><div class="kpi-val c-amber">2,094 kWh</div><div class="kpi-sub">2,094,000 so'm/kun</div></div>
+        <div class="kpi-card"><div class="kpi-label">Oylik sarflanish</div><div class="kpi-val c-amber">~62,820 kWh</div><div class="kpi-sub">30 kunlik hisob</div></div>
+        <div class="kpi-card"><div class="kpi-label">Oylik xarajat</div><div class="kpi-val c-amber">~62.8 mln</div><div class="kpi-sub">1 kWh ≈ 1,000 so'm</div></div>
+        <div class="kpi-card"><div class="kpi-label">Chiller ishlash</div><div class="kpi-val c-red">12–14 soat</div><div class="kpi-sub">Kunlik o'rtacha</div></div>
       </div>
-
       <div class="tbl-wrap">
         <table>
-          <thead>
-            <tr>
-              <th>Tizim</th>
-              <th>Ish soati</th>
-              <th>Yuklama</th>
-              <th>Kunlik (kWh)</th>
-              <th>Oylik (kWh)</th>
-              <th>Kunlik xarajat</th>
-              <th>Oylik xarajat</th>
-            </tr>
-          </thead>
+          <thead><tr><th>Tizim</th><th>Ish soati</th><th>Yuklama</th><th>Kunlik (kWh)</th><th>Oylik (kWh)</th><th>Kunlik xarajat</th><th>Oylik xarajat</th></tr></thead>
           <tbody>
-            <tr>
-              <td>💨 <strong>Havo tizimi (ZK)</strong></td>
-              <td style="color:var(--text2);">24 soat</td>
-              <td class="c-cyan">25 kW o'rt.</td>
-              <td class="num c-blue">600</td>
-              <td class="num c-blue">18,000</td>
-              <td class="num">600,000</td>
-              <td class="num c-blue">18,000,000</td>
-            </tr>
-            <tr>
-              <td>❄️ <strong>Chiller + Nasoslar</strong></td>
-              <td style="color:var(--text2);">12 soat</td>
-              <td class="c-green">120 kW o'rt.</td>
-              <td class="num c-green">1,440</td>
-              <td class="num c-green">43,200</td>
-              <td class="num">1,440,000</td>
-              <td class="num c-green">43,200,000</td>
-            </tr>
-            <tr>
-              <td>💡 <strong>Yoritish (LED)</strong></td>
-              <td style="color:var(--text2);">6 soat</td>
-              <td class="c-amber">9 kW</td>
-              <td class="num c-amber">54</td>
-              <td class="num c-amber">1,620</td>
-              <td class="num">54,000</td>
-              <td class="num c-amber">1,620,000</td>
-            </tr>
-            <tr class="total-row">
-              <td colspan="3" class="c-amber" style="font-size:13px;">☀️ JAMI (Yozgi mavsum)</td>
-              <td class="num c-amber">2,094</td>
-              <td class="num c-amber">~62,820</td>
-              <td class="num c-amber">2,094,000</td>
-              <td class="num c-amber" style="font-size:13.5px;">~62,820,000</td>
-            </tr>
+            <tr><td>💨 <strong>Havo tizimi (ZK)</strong></td><td style="color:var(--text2);">24 soat</td><td class="c-cyan">25 kW o'rt.</td><td class="num c-blue">600</td><td class="num c-blue">18,000</td><td class="num">600,000</td><td class="num c-blue">18,000,000</td></tr>
+            <tr><td>❄️ <strong>Chiller + Nasoslar</strong></td><td style="color:var(--text2);">12 soat</td><td class="c-green">120 kW o'rt.</td><td class="num c-green">1,440</td><td class="num c-green">43,200</td><td class="num">1,440,000</td><td class="num c-green">43,200,000</td></tr>
+            <tr><td>💡 <strong>Yoritish (LED)</strong></td><td style="color:var(--text2);">6 soat</td><td class="c-amber">9 kW</td><td class="num c-amber">54</td><td class="num c-amber">1,620</td><td class="num">54,000</td><td class="num c-amber">1,620,000</td></tr>
+            <tr class="total-row"><td colspan="3" class="c-amber" style="font-size:13px;">☀️ JAMI (Yozgi mavsum)</td><td class="num c-amber">2,094</td><td class="num c-amber">~62,820</td><td class="num c-amber">2,094,000</td><td class="num c-amber" style="font-size:13.5px;">~62,820,000</td></tr>
           </tbody>
         </table>
       </div>
-
-      <div class="vis-section" id="visSummer">
+      <div class="vis-section">
         <div class="vis-label">Oylik xarajat taqsimoti</div>
         <div class="vis-rows">
-          <div class="vis-row">
-            <div class="vis-name">Chiller + Nasoslar</div>
-            <div class="vis-track"><div class="vis-fill" style="background:var(--green);" data-w="69">43,200,000 so'm</div></div>
-            <div class="vis-mln c-green">43.2 mln</div>
-          </div>
-          <div class="vis-row">
-            <div class="vis-name">Havo tizimi (ZK)</div>
-            <div class="vis-track"><div class="vis-fill" style="background:var(--blue);" data-w="29">18,000,000 so'm</div></div>
-            <div class="vis-mln c-blue">18.0 mln</div>
-          </div>
-          <div class="vis-row">
-            <div class="vis-name">Yoritish (LED)</div>
-            <div class="vis-track"><div class="vis-fill" style="background:var(--amber);" data-w="3">1,620,000 so'm</div></div>
-            <div class="vis-mln c-amber">1.6 mln</div>
-          </div>
+          <div class="vis-row"><div class="vis-name">Chiller + Nasoslar</div><div class="vis-track"><div class="vis-fill" style="background:var(--green);" data-w="69">43,200,000 so'm</div></div><div class="vis-mln c-green">43.2 mln</div></div>
+          <div class="vis-row"><div class="vis-name">Havo tizimi (ZK)</div><div class="vis-track"><div class="vis-fill" style="background:var(--blue);" data-w="29">18,000,000 so'm</div></div><div class="vis-mln c-blue">18.0 mln</div></div>
+          <div class="vis-row"><div class="vis-name">Yoritish (LED)</div><div class="vis-track"><div class="vis-fill" style="background:var(--amber);" data-w="3">1,620,000 so'm</div></div><div class="vis-mln c-amber">1.6 mln</div></div>
         </div>
       </div>
     </div>
 
-    <!-- SPRING/FALL PANEL -->
+    <!-- SPRING/FALL -->
     <div class="s-panel" id="panelSpring">
       <div class="season-hero" style="background:linear-gradient(135deg,rgba(16,185,129,.07),rgba(6,182,212,.04));border-color:rgba(16,185,129,.22);">
         <div class="season-hero-inner">
@@ -1165,112 +888,32 @@ footer{
           </div>
         </div>
       </div>
-
       <div class="kpi-row">
-        <div class="kpi-card">
-          <div class="kpi-label">Kunlik sarflanish</div>
-          <div class="kpi-val c-green">702 kWh</div>
-          <div class="kpi-sub">702,000 so'm/kun</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-label">Oylik sarflanish</div>
-          <div class="kpi-val c-green">~21,060 kWh</div>
-          <div class="kpi-sub">30 kunlik hisob</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-label">Oylik xarajat</div>
-          <div class="kpi-val c-green">~21.1 mln</div>
-          <div class="kpi-sub">Yozga nisbatan −67%</div>
-        </div>
-        <div class="kpi-card">
-          <div class="kpi-label">Tejash (yozga vs)</div>
-          <div class="kpi-val c-cyan">41.8 mln</div>
-          <div class="kpi-sub">Har oy tejiladi</div>
-        </div>
+        <div class="kpi-card"><div class="kpi-label">Kunlik sarflanish</div><div class="kpi-val c-green">702 kWh</div><div class="kpi-sub">702,000 so'm/kun</div></div>
+        <div class="kpi-card"><div class="kpi-label">Oylik sarflanish</div><div class="kpi-val c-green">~21,060 kWh</div><div class="kpi-sub">30 kunlik hisob</div></div>
+        <div class="kpi-card"><div class="kpi-label">Oylik xarajat</div><div class="kpi-val c-green">~21.1 mln</div><div class="kpi-sub">Yozga nisbatan −67%</div></div>
+        <div class="kpi-card"><div class="kpi-label">Tejash (yozga vs)</div><div class="kpi-val c-cyan">41.8 mln</div><div class="kpi-sub">Har oy tejiladi</div></div>
       </div>
-
       <div class="tbl-wrap">
         <table>
-          <thead>
-            <tr>
-              <th>Tizim</th>
-              <th>Ish soati</th>
-              <th>Yuklama</th>
-              <th>Kunlik (kWh)</th>
-              <th>Oylik (kWh)</th>
-              <th>Kunlik xarajat</th>
-              <th>Oylik xarajat</th>
-            </tr>
-          </thead>
+          <thead><tr><th>Tizim</th><th>Ish soati</th><th>Yuklama</th><th>Kunlik (kWh)</th><th>Oylik (kWh)</th><th>Kunlik xarajat</th><th>Oylik xarajat</th></tr></thead>
           <tbody>
-            <tr>
-              <td>💨 <strong>Havo tizimi (ZK)</strong></td>
-              <td style="color:var(--text2);">24 soat</td>
-              <td class="c-cyan">25 kW o'rt.</td>
-              <td class="num c-blue">600</td>
-              <td class="num c-blue">18,000</td>
-              <td class="num">600,000</td>
-              <td class="num c-blue">18,000,000</td>
-            </tr>
-            <tr>
-              <td>💡 <strong>Yoritish (LED)</strong></td>
-              <td style="color:var(--text2);">6 soat</td>
-              <td class="c-amber">9 kW</td>
-              <td class="num c-amber">54</td>
-              <td class="num c-amber">1,620</td>
-              <td class="num">54,000</td>
-              <td class="num c-amber">1,620,000</td>
-            </tr>
-            <tr>
-              <td>🧠 <strong>Aqlli tizim</strong></td>
-              <td style="color:var(--text2);">24 soat</td>
-              <td class="c-purple">2 kW o'rt.</td>
-              <td class="num c-purple">48</td>
-              <td class="num c-purple">1,440</td>
-              <td class="num">48,000</td>
-              <td class="num c-purple">1,440,000</td>
-            </tr>
-            <tr class="dimmed">
-              <td>❄️ Chiller + Nasoslar</td>
-              <td>0 soat</td>
-              <td>—</td>
-              <td class="num">0</td>
-              <td class="num">0</td>
-              <td class="num">0</td>
-              <td class="num">0</td>
-            </tr>
-            <tr class="total-row">
-              <td colspan="3" class="c-green" style="font-size:13px;">🍃 JAMI (Bahor/Kuz)</td>
-              <td class="num c-green">702</td>
-              <td class="num c-green">~21,060</td>
-              <td class="num c-green">702,000</td>
-              <td class="num c-green" style="font-size:13.5px;">~21,060,000</td>
-            </tr>
+            <tr><td>💨 <strong>Havo tizimi (ZK)</strong></td><td style="color:var(--text2);">24 soat</td><td class="c-cyan">25 kW o'rt.</td><td class="num c-blue">600</td><td class="num c-blue">18,000</td><td class="num">600,000</td><td class="num c-blue">18,000,000</td></tr>
+            <tr><td>💡 <strong>Yoritish (LED)</strong></td><td style="color:var(--text2);">6 soat</td><td class="c-amber">9 kW</td><td class="num c-amber">54</td><td class="num c-amber">1,620</td><td class="num">54,000</td><td class="num c-amber">1,620,000</td></tr>
+            <tr><td>🧠 <strong>Aqlli tizim</strong></td><td style="color:var(--text2);">24 soat</td><td class="c-purple">2 kW o'rt.</td><td class="num c-purple">48</td><td class="num c-purple">1,440</td><td class="num">48,000</td><td class="num c-purple">1,440,000</td></tr>
+            <tr class="dimmed"><td>❄️ Chiller + Nasoslar</td><td>0 soat</td><td>—</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">0</td></tr>
+            <tr class="total-row"><td colspan="3" class="c-green" style="font-size:13px;">🍃 JAMI (Bahor/Kuz)</td><td class="num c-green">702</td><td class="num c-green">~21,060</td><td class="num c-green">702,000</td><td class="num c-green" style="font-size:13.5px;">~21,060,000</td></tr>
           </tbody>
         </table>
       </div>
-
-      <div class="vis-section" id="visSpring">
+      <div class="vis-section">
         <div class="vis-label">Oylik xarajat taqsimoti</div>
         <div class="vis-rows">
-          <div class="vis-row">
-            <div class="vis-name">Havo tizimi (ZK)</div>
-            <div class="vis-track"><div class="vis-fill" style="background:var(--blue);" data-w="86">18,000,000 so'm</div></div>
-            <div class="vis-mln c-blue">18.0 mln</div>
-          </div>
-          <div class="vis-row">
-            <div class="vis-name">Yoritish (LED)</div>
-            <div class="vis-track"><div class="vis-fill" style="background:var(--amber);" data-w="8">1,620,000 so'm</div></div>
-            <div class="vis-mln c-amber">1.6 mln</div>
-          </div>
-          <div class="vis-row">
-            <div class="vis-name">Aqlli tizim</div>
-            <div class="vis-track"><div class="vis-fill" style="background:var(--purple);" data-w="7">1,440,000 so'm</div></div>
-            <div class="vis-mln c-purple">1.4 mln</div>
-          </div>
+          <div class="vis-row"><div class="vis-name">Havo tizimi (ZK)</div><div class="vis-track"><div class="vis-fill" style="background:var(--blue);" data-w="86">18,000,000 so'm</div></div><div class="vis-mln c-blue">18.0 mln</div></div>
+          <div class="vis-row"><div class="vis-name">Yoritish (LED)</div><div class="vis-track"><div class="vis-fill" style="background:var(--amber);" data-w="8">1,620,000 so'm</div></div><div class="vis-mln c-amber">1.6 mln</div></div>
+          <div class="vis-row"><div class="vis-name">Aqlli tizim</div><div class="vis-track"><div class="vis-fill" style="background:var(--purple);" data-w="7">1,440,000 so'm</div></div><div class="vis-mln c-purple">1.4 mln</div></div>
         </div>
       </div>
-
       <div class="saving-box">
         <div>
           <div class="saving-label">💰 Yozga nisbatan tejalgan</div>
@@ -1282,7 +925,6 @@ footer{
         </div>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -1296,34 +938,63 @@ footer{
 </footer>
 
 <script>
-// ── NAVBAR SCROLL ──
-const NAV_H = () => document.getElementById('mainNav').offsetHeight;
+/* ════════ THEME TOGGLE ════════ */
+let isDark = true;
+
+function toggleTheme() {
+  isDark = !isDark;
+  const html  = document.documentElement;
+  const icon  = document.getElementById('themeIcon');
+  const label = document.getElementById('themeLabel');
+
+  if (isDark) {
+    html.setAttribute('data-theme', 'dark');
+    icon.textContent  = '🌙';
+    label.textContent = 'Tungi';
+  } else {
+    html.setAttribute('data-theme', 'light');
+    icon.textContent  = '☀️';
+    label.textContent = 'Kunduzgi';
+  }
+  // Save preference
+  try { localStorage.setItem('msTheme', isDark ? 'dark' : 'light'); } catch(e){}
+}
+
+// Restore saved preference on load
+(function(){
+  try {
+    const saved = localStorage.getItem('msTheme');
+    if (saved === 'light') toggleTheme();
+  } catch(e){}
+})();
+
+/* ════════ NAVBAR ════════ */
+const NAV_H   = () => document.getElementById('mainNav').offsetHeight;
 const SEC_IDS = ['hero','dashboard','control','hvac','lighting','emergency','calculation'];
 
 document.querySelectorAll('.nav-link').forEach(link => {
   link.addEventListener('click', () => {
-    const id = link.dataset.sec;
-    const el = document.getElementById(id);
+    const el = document.getElementById(link.dataset.sec);
     if (!el) return;
-    const offset = el.getBoundingClientRect().top + window.pageYOffset - NAV_H() - 6;
-    window.scrollTo({ top: offset, behavior: 'smooth' });
+    const top = el.getBoundingClientRect().top + window.pageYOffset - NAV_H() - 6;
+    window.scrollTo({ top, behavior: 'smooth' });
   });
 });
 
-function updateActiveNav() {
-  let current = SEC_IDS[0];
+function updateNav() {
+  let cur = SEC_IDS[0];
   SEC_IDS.forEach(id => {
     const el = document.getElementById(id);
-    if (el && el.getBoundingClientRect().top <= NAV_H() + 24) current = id;
+    if (el && el.getBoundingClientRect().top <= NAV_H() + 28) cur = id;
   });
   document.querySelectorAll('.nav-link').forEach(l =>
-    l.classList.toggle('active', l.dataset.sec === current)
+    l.classList.toggle('active', l.dataset.sec === cur)
   );
 }
-window.addEventListener('scroll', updateActiveNav, { passive: true });
-updateActiveNav();
+window.addEventListener('scroll', updateNav, { passive: true });
+updateNav();
 
-// ── POWER BARS ──
+/* ════════ POWER BARS ════════ */
 const PWR = [
   { name: '8 × Haier Chiller', kw: 224, pct: 71, col: '#10b981' },
   { name: '2 × ZK50 agregat',  kw: 60,  pct: 19, col: '#3b82f6' },
@@ -1340,45 +1011,42 @@ PWR.forEach(d => {
   barsEl.appendChild(row);
 });
 
-// ── ANIMATE BARS ──
+/* ════════ ANIMATE FILLS ════════ */
 let animated = new Set();
 function tryAnim() {
   document.querySelectorAll('.bar-fill, .vis-fill').forEach(el => {
     if (animated.has(el)) return;
-    const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight - 30) {
+    if (el.getBoundingClientRect().top < window.innerHeight - 20) {
       animated.add(el);
       setTimeout(() => { el.style.width = (el.dataset.w || 0) + '%'; }, 80);
     }
   });
 }
 window.addEventListener('scroll', tryAnim, { passive: true });
-setTimeout(tryAnim, 400);
+setTimeout(tryAnim, 500);
 
-// ── PRESSURE MODES ──
+/* ════════ PRESSURE MODES ════════ */
 const MODES = [
-  { pa: 250, name: 'Minimal bosim', col: 'var(--green2)',
+  { pa: 250, name: 'Minimal bosim',  col: 'var(--green2)',
     desc: "Minimal rejim: faqat ZK30 agregatlari ishlaydi. Kam yuk va texnik ko'rik paytida qo'llaniladi." },
-  { pa: 500, name: 'Normal bosim', col: 'var(--cyan)',
+  { pa: 500, name: 'Normal bosim',   col: 'var(--cyan)',
     desc: "Standart ish rejimi: ZK30 va bir ZK50 agregat ishlaydi. Kundalik mashg'ulotlar uchun optimal." },
-  { pa: 750, name: 'Yuqori bosim', col: 'var(--amber2)',
+  { pa: 750, name: 'Yuqori bosim',   col: 'var(--amber2)',
     desc: "Kuchaytirilgan rejim: barcha agregatlar to'liq kuchda ishlaydi. Katta tadbirlar va musobaqalar uchun." },
-  { pa: 900, name: 'Maksimal bosim', col: 'var(--red2)',
-    desc: "Barcha agregatlar to'liq quvvatda. Stadion musobaqaga tayyorlash uchun maksimal bosim ta'minlanadi." },
 ];
 function selMode(idx) {
   document.querySelectorAll('.p-mode').forEach((el, i) => el.classList.toggle('active', i === idx));
   const m = MODES[idx];
   document.getElementById('modeVal').textContent = m.pa + ' Pa — ' + m.name;
-  document.getElementById('modeVal').style.color = m.col;
+  document.getElementById('modeVal').style.color  = m.col;
   document.getElementById('modeDesc').textContent = m.desc;
 }
 
-// ── CHILLERS ──
+/* ════════ CHILLERS ════════ */
 const cSt = Array(8).fill(true);
 function renderChillers() {
-  const el = document.getElementById('chillerDots');
-  el.innerHTML = '';
+  const wrap = document.getElementById('chillerDots');
+  wrap.innerHTML = '';
   cSt.forEach((on, i) => {
     const d = document.createElement('div');
     d.className = 'c-dot';
@@ -1387,20 +1055,20 @@ function renderChillers() {
       border:1.5px solid ${on ? 'var(--green)' : 'var(--border)'};
       color:${on ? 'var(--green2)' : 'var(--text3)'};`;
     d.onclick = () => { cSt[i] = !cSt[i]; renderChillers(); };
-    el.appendChild(d);
+    wrap.appendChild(d);
   });
   const on = cSt.filter(Boolean).length;
   const st = document.getElementById('chillerStatus');
   st.textContent = on === 8 ? 'Barcha 8 chiller faol ✓' : `${on} ta faol · ${8 - on} ta to'xtatilgan`;
-  st.style.color = on < 4 ? 'var(--amber2)' : 'var(--green2)';
+  st.style.color  = on < 4 ? 'var(--amber2)' : 'var(--green2)';
 }
 renderChillers();
 
-// ── PUMPS ──
+/* ════════ PUMPS ════════ */
 const pSt = Array(4).fill(true);
 function renderPumps() {
-  const el = document.getElementById('pumpDots');
-  el.innerHTML = '';
+  const wrap = document.getElementById('pumpDots');
+  wrap.innerHTML = '';
   pSt.forEach((on, i) => {
     const d = document.createElement('div');
     d.className = 'p-dot';
@@ -1409,7 +1077,7 @@ function renderPumps() {
       border:2px solid ${on ? 'var(--cyan)' : 'var(--border)'};
       color:${on ? 'var(--cyan)' : 'var(--text3)'};`;
     d.onclick = () => { pSt[i] = !pSt[i]; renderPumps(); };
-    el.appendChild(d);
+    wrap.appendChild(d);
   });
   const on = pSt.filter(Boolean).length;
   document.getElementById('pumpStatus').textContent =
@@ -1417,7 +1085,7 @@ function renderPumps() {
 }
 renderPumps();
 
-// ── LED ──
+/* ════════ LED ════════ */
 const lSt = Array(30).fill(true);
 let ledAllOn = true;
 function renderLED() {
@@ -1426,8 +1094,7 @@ function renderLED() {
   lSt.forEach((on, i) => {
     const d = document.createElement('div');
     d.className = 'led-block';
-    const n = String(i + 1).padStart(2, '0');
-    d.textContent = 'L' + n;
+    d.textContent = 'L' + String(i + 1).padStart(2, '0');
     d.style.cssText = `background:${on ? 'rgba(245,158,11,.15)' : 'rgba(30,45,69,.5)'};
       border:1.5px solid ${on ? 'var(--amber)' : 'var(--border)'};
       color:${on ? 'var(--amber2)' : 'var(--text3)'};
@@ -1447,62 +1114,59 @@ renderLED();
 function toggleAllLED() {
   ledAllOn = !ledAllOn;
   lSt.fill(ledAllOn);
-  document.getElementById('ledToggleBtn').textContent =
-    ledAllOn ? "Hammasini o'chir" : "Hammasini yoq";
+  document.getElementById('ledToggleBtn').textContent = ledAllOn ? "Hammasini o'chir" : "Hammasini yoq";
   renderLED();
 }
 
-// ── EMERGENCY ──
+/* ════════ EMERGENCY ════════ */
 let emOn = false;
 function toggleEmergency() {
   emOn = !emOn;
-  const btn = document.getElementById('emergBtn');
-  const st  = document.getElementById('emergStatus');
+  const btn    = document.getElementById('emergBtn');
+  const st     = document.getElementById('emergStatus');
   const swTime = document.getElementById('swTime');
-
   if (emOn) {
     btn.textContent = '🟢 Asosiy tarmogini yoq'; btn.classList.add('on');
-    st.textContent = '⚡ Avariya rejimi faol — Generatorlar ishlayapti'; st.style.color = 'var(--red2)';
+    st.textContent  = '⚡ Avariya rejimi faol — Generatorlar ishlayapti'; st.style.color = 'var(--red2)';
     document.getElementById('gen1fill').style.width = '89%';
     document.getElementById('gen2fill').style.width = '89%';
     document.getElementById('gen1info').textContent = '🔴 Ishlayapti — 100.6 kW yuklama';
     document.getElementById('gen1info').style.color = 'var(--red2)';
     document.getElementById('gen2info').textContent = '🔴 Ishlayapti — 100.6 kW yuklama';
     document.getElementById('gen2info').style.color = 'var(--red2)';
-    document.getElementById('swGrid').className    = 'sw-node s-warn'; document.getElementById('swGrid').innerHTML    = '⚠️ Tarmoq';
-    document.getElementById('swA1').className      = 'sw-arr a-emg';
-    document.getElementById('swSwitch').className  = 'sw-node s-emg'; document.getElementById('swSwitch').innerHTML  = '⚡ Generatorlar';
-    document.getElementById('swA2').className      = 'sw-arr a-emg';
+    document.getElementById('swGrid').className   = 'sw-node s-warn'; document.getElementById('swGrid').innerHTML   = '⚠️ Tarmoq';
+    document.getElementById('swA1').className     = 'sw-arr a-emg';
+    document.getElementById('swSwitch').className = 'sw-node s-emg'; document.getElementById('swSwitch').innerHTML = '⚡ Generatorlar';
+    document.getElementById('swA2').className     = 'sw-arr a-emg';
     swTime.textContent = "⚡ Avariya rejimi · 2 soniyada yondi · 226 kW ta'minot";
-    swTime.style.cssText = 'background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.22);color:var(--red2);';
+    swTime.style.cssText = 'background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.22);color:var(--red2);padding:5px 14px;border-radius:20px;text-align:center;margin-top:1rem;display:block;';
   } else {
     btn.textContent = '🔴 Avariya rejimini yoq'; btn.classList.remove('on');
-    st.textContent = '✓ Asosiy tarmoq faol'; st.style.color = 'var(--green2)';
+    st.textContent  = '✓ Asosiy tarmoq faol'; st.style.color = 'var(--green2)';
     document.getElementById('gen1fill').style.width = '0%';
     document.getElementById('gen2fill').style.width = '0%';
     document.getElementById('gen1info').textContent = 'Kutish rejimida · Tayyor';
     document.getElementById('gen1info').style.color = 'var(--text2)';
     document.getElementById('gen2info').textContent = 'Kutish rejimida · Tayyor';
     document.getElementById('gen2info').style.color = 'var(--text2)';
-    document.getElementById('swGrid').className    = 'sw-node s-on'; document.getElementById('swGrid').innerHTML    = '🏙️ Tarmoq';
-    document.getElementById('swA1').className      = 'sw-arr a-on';
-    document.getElementById('swSwitch').className  = 'sw-node s-on'; document.getElementById('swSwitch').innerHTML  = '🔀 ATS Kaliti';
-    document.getElementById('swA2').className      = 'sw-arr a-on';
+    document.getElementById('swGrid').className   = 'sw-node s-on'; document.getElementById('swGrid').innerHTML   = '🏙️ Tarmoq';
+    document.getElementById('swA1').className     = 'sw-arr a-on';
+    document.getElementById('swSwitch').className = 'sw-node s-on'; document.getElementById('swSwitch').innerHTML = '🔀 ATS Kaliti';
+    document.getElementById('swA2').className     = 'sw-arr a-on';
     swTime.textContent = "✓ Asosiy tarmoq · Uzluksiz ta'minot";
-    swTime.style.cssText = 'background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.22);color:var(--green2);';
+    swTime.style.cssText = 'background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.22);color:var(--green2);padding:5px 14px;border-radius:20px;text-align:center;margin-top:1rem;display:block;';
   }
 }
 
-// ── SEASON TABS ──
+/* ════════ SEASON TABS ════════ */
 function selSeason(s) {
   const isSummer = s === 'summer';
   document.getElementById('panelSummer').classList.toggle('active', isSummer);
   document.getElementById('panelSpring').classList.toggle('active', !isSummer);
-  document.getElementById('tabSummer').className = 's-tab' + (isSummer ? ' tab-summer' : '');
-  document.getElementById('tabSpring').className = 's-tab' + (!isSummer ? ' tab-spring' : '');
-  // Re-trigger bar animations for newly shown panel
+  document.getElementById('tabSummer').className = 's-tab' + (isSummer  ? ' tab-summer' : '');
+  document.getElementById('tabSpring').className = 's-tab' + (!isSummer ? ' tab-spring'  : '');
   animated = new Set();
-  setTimeout(tryAnim, 120);
+  setTimeout(tryAnim, 100);
 }
 </script>
 </body>

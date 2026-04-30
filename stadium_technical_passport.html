@@ -1,0 +1,1003 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --bg:#070b14;
+    --bg2:#0d1422;
+    --bg3:#111827;
+    --card:#141e2e;
+    --card2:#1a2540;
+    --border:#1e2d45;
+    --blue:#3b82f6;
+    --blue2:#60a5fa;
+    --green:#10b981;
+    --green2:#34d399;
+    --amber:#f59e0b;
+    --amber2:#fbbf24;
+    --red:#ef4444;
+    --red2:#f87171;
+    --cyan:#06b6d4;
+    --purple:#8b5cf6;
+    --text:#f0f4ff;
+    --text2:#8899bb;
+    --text3:#4a5878;
+    --accent-glow:rgba(59,130,246,0.15);
+  }
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Manrope',sans-serif;
+    font-size:14px;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  /* NAV */
+  nav{
+    position:sticky;top:0;z-index:100;
+    background:rgba(7,11,20,0.85);
+    backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
+    padding:0 2rem;
+    display:flex;align-items:center;gap:0;
+  }
+  .nav-brand{
+    font-size:13px;font-weight:700;color:var(--blue2);
+    letter-spacing:.08em;text-transform:uppercase;
+    padding:1rem 0;margin-right:2rem;
+    flex-shrink:0;
+  }
+  .nav-links{display:flex;gap:0;overflow-x:auto;}
+  .nav-link{
+    padding:.75rem 1rem;font-size:12px;font-weight:600;
+    color:var(--text2);cursor:pointer;
+    border-bottom:2px solid transparent;
+    white-space:nowrap;
+    transition:all .2s;
+  }
+  .nav-link:hover{color:var(--blue2);}
+  .nav-link.active{color:var(--blue2);border-bottom-color:var(--blue);}
+
+  /* SECTIONS */
+  section{padding:3rem 2rem;border-bottom:1px solid var(--border);max-width:1100px;margin:0 auto;}
+
+  /* HERO */
+  .hero{
+    background:linear-gradient(135deg,#070b14 0%,#0d1a2e 50%,#091428 100%);
+    padding:4rem 2rem 3rem;
+    position:relative;overflow:hidden;
+    max-width:100%;
+    border-bottom:1px solid var(--border);
+  }
+  .hero::before{
+    content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+    background:radial-gradient(ellipse 60% 50% at 70% 40%,rgba(59,130,246,.08) 0%,transparent 70%);
+    pointer-events:none;
+  }
+  .hero-inner{max-width:1100px;margin:0 auto;}
+  .hero-badge{
+    display:inline-flex;align-items:center;gap:6px;
+    background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.3);
+    color:var(--blue2);font-size:11px;font-weight:700;letter-spacing:.1em;
+    text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:1.5rem;
+  }
+  .hero-badge::before{
+    content:'';width:6px;height:6px;border-radius:50%;
+    background:var(--blue2);animation:pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+  .hero-title{
+    font-size:clamp(28px,4vw,52px);font-weight:800;
+    color:var(--text);line-height:1.1;margin-bottom:.5rem;
+  }
+  .hero-sub{font-size:15px;color:var(--text2);margin-bottom:2.5rem;font-weight:400;}
+  
+  .dim-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:12px;overflow:hidden;margin-bottom:2rem;}
+  .dim-card{background:var(--card);padding:1.25rem 1rem;text-align:center;}
+  .dim-label{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem;}
+  .dim-val{font-size:clamp(24px,3vw,36px);font-weight:800;color:var(--blue2);line-height:1;}
+  .dim-unit{font-size:13px;color:var(--text2);margin-top:2px;}
+
+  .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;}
+  .stat-card{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:12px;padding:1rem;
+    transition:border-color .2s,transform .15s;
+  }
+  .stat-card:hover{border-color:var(--blue);transform:translateY(-2px);}
+  .stat-icon{font-size:18px;margin-bottom:.5rem;}
+  .stat-num{font-size:22px;font-weight:800;color:var(--text);}
+  .stat-label{font-size:11px;color:var(--text2);margin-top:2px;}
+  .text-blue{color:var(--blue2);}
+  .text-green{color:var(--green2);}
+  .text-amber{color:var(--amber2);}
+  .text-red{color:var(--red2);}
+  .text-cyan{color:var(--cyan);}
+  .text-purple{color:var(--purple);}
+
+  /* SECTION HEADERS */
+  .sec-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:2rem;}
+  .sec-num{
+    font-size:11px;font-weight:700;color:var(--text3);
+    letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem;
+  }
+  .sec-title{font-size:clamp(20px,2.5vw,28px);font-weight:800;color:var(--text);}
+  .sec-desc{font-size:13px;color:var(--text2);margin-top:.3rem;max-width:500px;}
+
+  /* DASHBOARD */
+  .power-main{
+    background:linear-gradient(135deg,var(--card) 0%,var(--card2) 100%);
+    border:1px solid var(--border);border-radius:16px;
+    padding:2rem;margin-bottom:1.5rem;
+    position:relative;overflow:hidden;
+  }
+  .power-main::after{
+    content:'';position:absolute;top:-40px;right:-40px;
+    width:180px;height:180px;border-radius:50%;
+    background:radial-gradient(circle,rgba(59,130,246,.08) 0%,transparent 70%);
+    pointer-events:none;
+  }
+  .power-label{font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem;}
+  .power-val{font-size:clamp(36px,5vw,64px);font-weight:800;color:var(--blue2);line-height:1;}
+  .power-unit{font-size:18px;color:var(--text2);margin-left:4px;}
+  .power-sub{font-size:13px;color:var(--text2);margin-top:.5rem;}
+
+  .cost-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.5rem;}
+  .cost-card{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:12px;padding:1.25rem;
+  }
+  .cost-season{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem;}
+  .cost-amount{font-size:clamp(18px,2.5vw,26px);font-weight:800;}
+  .cost-note{font-size:11px;color:var(--text2);margin-top:3px;}
+
+  /* POWER BARS */
+  .power-bars{display:flex;flex-direction:column;gap:10px;}
+  .bar-row{display:flex;align-items:center;gap:10px;}
+  .bar-name{font-size:12px;color:var(--text2);width:110px;flex-shrink:0;text-align:right;}
+  .bar-track{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:4px;transition:width .8s cubic-bezier(.4,0,.2,1);}
+  .bar-val{font-size:12px;font-weight:700;width:55px;flex-shrink:0;}
+
+  /* CONTROL CENTER */
+  .pressure-modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:2rem;}
+  .p-mode{
+    background:var(--card);border:2px solid var(--border);
+    border-radius:12px;padding:1rem;cursor:pointer;text-align:center;
+    transition:all .2s;
+  }
+  .p-mode:hover{border-color:var(--blue);}
+  .p-mode.active{border-color:var(--blue);background:rgba(59,130,246,.1);}
+  .p-mode-val{font-size:20px;font-weight:800;color:var(--blue2);}
+  .p-mode-unit{font-size:11px;color:var(--text3);margin-bottom:.3rem;}
+  .p-mode-name{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;}
+  .p-mode-badge{
+    font-size:10px;padding:2px 8px;border-radius:10px;margin-top:.4rem;display:inline-block;
+  }
+  .badge-min{background:rgba(16,185,129,.15);color:var(--green2);}
+  .badge-low{background:rgba(6,182,212,.15);color:var(--cyan);}
+  .badge-mid{background:rgba(245,158,11,.15);color:var(--amber2);}
+  .badge-max{background:rgba(239,68,68,.15);color:var(--red2);}
+
+  .agg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
+  .agg-card{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:12px;padding:1.25rem;
+  }
+  .agg-model{font-size:13px;font-weight:800;color:var(--text);margin-bottom:.25rem;}
+  .agg-qty{font-size:11px;color:var(--text3);margin-bottom:.75rem;}
+  .agg-kw{font-size:28px;font-weight:800;color:var(--blue2);}
+  .agg-kw-unit{font-size:13px;color:var(--text2);}
+  .agg-total{font-size:11px;color:var(--text2);margin-top:.25rem;}
+  .agg-vis{display:flex;gap:6px;margin-top:.75rem;}
+  .agg-dot{width:20px;height:20px;border-radius:6px;background:var(--blue);opacity:.7;}
+
+  /* HVAC */
+  .hvac-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;}
+  .hvac-card{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:14px;overflow:hidden;
+  }
+  .hvac-header{
+    background:var(--card2);padding:1rem 1.25rem;
+    border-bottom:1px solid var(--border);
+    display:flex;align-items:center;gap:10px;
+  }
+  .hvac-icon{
+    width:36px;height:36px;border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;flex-shrink:0;
+  }
+  .hvac-body{padding:1.25rem;}
+  .chiller-dots{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1rem;}
+  .chiller-dot{
+    width:38px;height:38px;border-radius:8px;
+    background:rgba(16,185,129,.1);border:1.5px solid var(--green);
+    display:flex;align-items:center;justify-content:center;
+    font-size:10px;font-weight:700;color:var(--green2);
+    cursor:pointer;transition:all .2s;
+  }
+  .chiller-dot:hover{background:rgba(16,185,129,.25);transform:scale(1.08);}
+  .pump-dots{display:flex;gap:10px;margin-bottom:1rem;}
+  .pump-dot{
+    width:44px;height:44px;border-radius:50%;
+    background:rgba(6,182,212,.1);border:2px solid var(--cyan);
+    display:flex;align-items:center;justify-content:center;
+    font-size:10px;font-weight:700;color:var(--cyan);
+    cursor:pointer;transition:all .2s;
+    animation:spin-border 4s linear infinite;
+  }
+  @keyframes spin-border{
+    0%{box-shadow:0 0 0 0 rgba(6,182,212,0),2px -2px 0 0 var(--cyan)}
+    50%{box-shadow:0 2px 0 0 rgba(6,182,212,0),-2px 2px 0 0 var(--cyan)}
+    100%{box-shadow:0 0 0 0 rgba(6,182,212,0),2px -2px 0 0 var(--cyan)}
+  }
+  .pump-dot:hover{background:rgba(6,182,212,.25);transform:scale(1.1);}
+  .info-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);}
+  .info-row:last-child{border-bottom:none;}
+  .info-key{font-size:12px;color:var(--text2);}
+  .info-val{font-size:12px;font-weight:700;color:var(--text);}
+
+  /* LIGHTING */
+  .led-grid{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1rem;}
+  .led-block{
+    width:28px;height:28px;border-radius:6px;
+    background:rgba(245,158,11,.15);border:1.5px solid var(--amber);
+    display:flex;align-items:center;justify-content:center;
+    font-size:9px;color:var(--amber2);font-weight:700;
+    cursor:pointer;transition:all .15s;
+  }
+  .led-block:hover{background:rgba(245,158,11,.4);box-shadow:0 0 8px rgba(245,158,11,.4);}
+
+  /* EMERGENCY */
+  .emergency-banner{
+    background:linear-gradient(135deg,rgba(239,68,68,.08) 0%,rgba(245,158,11,.05) 100%);
+    border:1px solid rgba(239,68,68,.3);
+    border-radius:16px;padding:2rem;margin-bottom:1.5rem;
+    position:relative;overflow:hidden;
+  }
+  .emergency-banner::before{
+    content:'⚡';position:absolute;right:2rem;top:50%;
+    transform:translateY(-50%);font-size:80px;opacity:.06;
+  }
+  .emerg-title{font-size:18px;font-weight:800;color:var(--red2);margin-bottom:.5rem;}
+  .emerg-desc{font-size:13px;color:var(--text2);max-width:500px;}
+
+  .gen-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:1.5rem;}
+  .gen-card{
+    background:var(--card);border:2px solid rgba(239,68,68,.25);
+    border-radius:14px;padding:1.5rem;position:relative;overflow:hidden;
+  }
+  .gen-card::before{
+    content:'';position:absolute;top:0;right:0;
+    width:60px;height:60px;
+    background:radial-gradient(circle,rgba(239,68,68,.1) 0%,transparent 70%);
+  }
+  .gen-model{font-size:12px;font-weight:700;color:var(--red2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.25rem;}
+  .gen-name{font-size:14px;font-weight:600;color:var(--text2);margin-bottom:1rem;}
+  .gen-kw{font-size:36px;font-weight:800;color:var(--red2);}
+  .gen-kw-unit{font-size:14px;color:var(--text2);}
+  .gen-bar{
+    margin-top:1rem;height:6px;background:var(--border);border-radius:3px;overflow:hidden;
+  }
+  .gen-bar-fill{
+    height:100%;background:linear-gradient(90deg,var(--red),var(--amber));
+    border-radius:3px;width:0;transition:width 1s .3s;
+  }
+  .gen-info{font-size:11px;color:var(--text2);margin-top:.5rem;}
+
+  .switch-diagram{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:14px;padding:1.5rem;
+  }
+  .sw-title{font-size:13px;font-weight:700;color:var(--text2);margin-bottom:1.5rem;text-align:center;}
+  .sw-flow{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;}
+  .sw-node{
+    background:var(--card2);border:1px solid var(--border);
+    border-radius:10px;padding:.6rem 1rem;text-align:center;
+    font-size:11px;font-weight:700;color:var(--text2);min-width:80px;
+  }
+  .sw-node.active{border-color:var(--green);color:var(--green2);background:rgba(16,185,129,.08);}
+  .sw-node.warn{border-color:var(--red);color:var(--red2);background:rgba(239,68,68,.08);}
+  .sw-node.emg{border-color:var(--amber);color:var(--amber2);background:rgba(245,158,11,.08);}
+  .sw-arrow{
+    width:30px;height:2px;background:var(--border);position:relative;flex-shrink:0;margin:0 2px;
+  }
+  .sw-arrow::after{
+    content:'';position:absolute;right:-4px;top:-4px;
+    width:0;height:0;
+    border-left:8px solid var(--border);border-top:5px solid transparent;border-bottom:5px solid transparent;
+  }
+  .sw-arrow.active{background:var(--green2);}
+  .sw-arrow.active::after{border-left-color:var(--green2);}
+  .sw-arrow.emg{background:var(--amber2);}
+  .sw-arrow.emg::after{border-left-color:var(--amber2);}
+  .sw-row{display:flex;align-items:center;justify-content:center;gap:4px;margin-bottom:8px;flex-wrap:wrap;}
+  .sw-time{
+    background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);
+    color:var(--green2);font-size:11px;font-weight:700;
+    padding:4px 12px;border-radius:20px;text-align:center;margin-top:1rem;
+    display:inline-block;width:100%;
+  }
+  /* TOGGLE */
+  .emergency-toggle{
+    display:flex;align-items:center;gap:10px;margin-bottom:1.5rem;
+  }
+  .toggle-btn{
+    background:var(--card);border:1px solid var(--border);
+    color:var(--text2);font-size:12px;font-weight:700;
+    padding:6px 14px;border-radius:8px;cursor:pointer;
+    transition:all .2s;
+  }
+  .toggle-btn:hover{border-color:var(--red);}
+  .toggle-btn.on{background:rgba(239,68,68,.1);border-color:var(--red);color:var(--red2);}
+  .em-status{font-size:12px;font-weight:700;}
+
+  /* FOOTER */
+  footer{
+    background:var(--bg2);border-top:1px solid var(--border);
+    padding:2rem;text-align:center;
+    font-size:11px;color:var(--text3);
+  }
+  .footer-inner{max-width:1100px;margin:0 auto;}
+  .footer-logo{font-size:13px;font-weight:800;color:var(--blue2);margin-bottom:.5rem;}
+
+  /* PLACEHOLDER */
+  .img-placeholder{
+    background:var(--card2);border:1px dashed var(--border);
+    border-radius:10px;display:flex;align-items:center;justify-content:center;
+    flex-direction:column;gap:.5rem;color:var(--text3);font-size:12px;
+    text-align:center;
+  }
+  .img-placeholder .ph-icon{font-size:24px;opacity:.5;}
+
+  /* TAG */
+  .tag{
+    display:inline-flex;align-items:center;
+    background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.3);
+    color:var(--purple);font-size:10px;font-weight:700;
+    text-transform:uppercase;letter-spacing:.08em;
+    padding:2px 8px;border-radius:6px;
+  }
+
+  /* SCROLL */
+  html{scroll-behavior:smooth;}
+  ::-webkit-scrollbar{width:4px;height:4px;}
+  ::-webkit-scrollbar-track{background:var(--bg);}
+  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">⬡ MetaSpace</div>
+  <div class="nav-links">
+    <div class="nav-link active" onclick="scrollTo('hero')">Umumiy</div>
+    <div class="nav-link" onclick="scrollTo('dashboard')">Quvvat</div>
+    <div class="nav-link" onclick="scrollTo('control')">Boshqaruv</div>
+    <div class="nav-link" onclick="scrollTo('hvac')">HVAC</div>
+    <div class="nav-link" onclick="scrollTo('lighting')">Yoritish</div>
+    <div class="nav-link" onclick="scrollTo('emergency')">Favqulodda</div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Texnik Pasport — 2024</div>
+    <h1 class="hero-title">Havo Tayanchli<br>Zamonaviy Stadion</h1>
+    <p class="hero-sub">Pneumatik konstruktsiya · Intelektual iqlim tizimi · MetaSpace nazorat tizimi</p>
+
+    <!-- Dimensions -->
+    <div class="dim-grid">
+      <div class="dim-card">
+        <div class="dim-label">Uzunlik</div>
+        <div class="dim-val text-blue">110</div>
+        <div class="dim-unit">metr</div>
+      </div>
+      <div class="dim-card">
+        <div class="dim-label">Kenglik</div>
+        <div class="dim-val text-blue">78</div>
+        <div class="dim-unit">metr</div>
+      </div>
+      <div class="dim-card">
+        <div class="dim-label">Balandlik</div>
+        <div class="dim-val text-blue">27</div>
+        <div class="dim-unit">metr</div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-icon">⚡</div>
+        <div class="stat-num text-blue">315 <span style="font-size:14px;color:var(--text2)">kW</span></div>
+        <div class="stat-label">Jami quvvat sarfi</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">❄️</div>
+        <div class="stat-num text-green">8</div>
+        <div class="stat-label">Haier Chiller</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">💨</div>
+        <div class="stat-num text-cyan">4</div>
+        <div class="stat-label">Havo agregatlari</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">💡</div>
+        <div class="stat-num text-amber">30</div>
+        <div class="stat-label">LED blok</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🔋</div>
+        <div class="stat-num text-red">226 <span style="font-size:14px;color:var(--text2)">kW</span></div>
+        <div class="stat-label">Zaxira generator quvvati</div>
+      </div>
+    </div>
+
+    <!-- Img placeholder -->
+    <div class="img-placeholder" style="height:160px;margin-top:1.5rem;">
+      <div class="ph-icon">🏟️</div>
+      <div>Stadion tashqi ko'rinishi rasmi</div>
+      <div style="font-size:10px;opacity:.7">110 × 78 × 27 m · Pneumatik qoplayli</div>
+    </div>
+  </div>
+</div>
+
+<!-- POWER DASHBOARD -->
+<section id="dashboard">
+  <div class="sec-header">
+    <div>
+      <div class="sec-num">01 — Quvvat Paneli</div>
+      <div class="sec-title">Energetika Boshqaruvi</div>
+      <div class="sec-desc">Real vaqtda quvvat sarfi monitoringi va oylik xarajatlar hisobi</div>
+    </div>
+    <div class="tag">Interaktiv</div>
+  </div>
+
+  <!-- Main power display -->
+  <div class="power-main">
+    <div class="power-label">Jami o'rnatilgan quvvat</div>
+    <div><span class="power-val" id="totalPower">315</span><span class="power-unit">kW</span></div>
+    <div class="power-sub">Barcha tizimlar to'liq yuklanganda · Real sarflanish rejimga qarab farqlanadi</div>
+    <div style="margin-top:1.5rem;">
+      <div class="power-bars" id="powerBars"></div>
+    </div>
+  </div>
+
+  <!-- Cost cards -->
+  <div class="cost-grid">
+    <div class="cost-card">
+      <div class="cost-season">☀️ Yozgi oylik xarajat</div>
+      <div class="cost-amount text-amber" style="font-size:clamp(20px,3vw,30px)">~65 <span style="font-size:14px">mln so'm</span></div>
+      <div class="cost-note">Chillerlar + havo agregatlari + yoritish</div>
+    </div>
+    <div class="cost-card">
+      <div class="cost-season">❄️ Qishki oylik xarajat</div>
+      <div class="cost-amount text-blue" style="font-size:clamp(20px,3vw,30px)">~32 <span style="font-size:14px">mln so'm</span></div>
+      <div class="cost-note">Isitish minimal · chiller talabi kam</div>
+    </div>
+  </div>
+
+  <!-- Power breakdown details -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;">
+    <div class="stat-card" style="border-color:rgba(59,130,246,.3)">
+      <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem;">ZK50 × 2</div>
+      <div style="font-size:22px;font-weight:800;color:var(--blue2);">60 kW</div>
+      <div style="font-size:11px;color:var(--text2);">30 kW × 2 ta agregat</div>
+    </div>
+    <div class="stat-card" style="border-color:rgba(6,182,212,.3)">
+      <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem;">ZK30 × 2</div>
+      <div style="font-size:22px;font-weight:800;color:var(--cyan);">22 kW</div>
+      <div style="font-size:11px;color:var(--text2);">11 kW × 2 ta agregat</div>
+    </div>
+    <div class="stat-card" style="border-color:rgba(16,185,129,.3)">
+      <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem;">8 Haier Chiller</div>
+      <div style="font-size:22px;font-weight:800;color:var(--green2);">224 kW</div>
+      <div style="font-size:11px;color:var(--text2);">Mikroklimat tizimi asosi</div>
+    </div>
+    <div class="stat-card" style="border-color:rgba(245,158,11,.3)">
+      <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem;">30 LED blok</div>
+      <div style="font-size:22px;font-weight:800;color:var(--amber2);">9 kW</div>
+      <div style="font-size:11px;color:var(--text2);">0.3 kW × 30 ta blok</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTROL CENTER -->
+<section id="control">
+  <div class="sec-header">
+    <div>
+      <div class="sec-num">02 — Boshqaruv Markazi</div>
+      <div class="sec-title">MetaSpace Tizimi</div>
+      <div class="sec-desc">Bosim rejimlarini boshqarish · Avtomatik nazorat tizimi</div>
+    </div>
+    <div class="tag">250 — 900 Pa</div>
+  </div>
+
+  <!-- Pressure modes -->
+  <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:1rem;">Bosim rejimlari</div>
+  <div class="pressure-modes" id="pressureModes">
+    <div class="p-mode" onclick="selectMode(0)">
+      <div class="p-mode-unit">Pa</div>
+      <div class="p-mode-val">250</div>
+      <div class="p-mode-name">Minimal</div>
+      <div class="p-mode-badge badge-min">Minimal yuk</div>
+    </div>
+    <div class="p-mode" onclick="selectMode(1)">
+      <div class="p-mode-unit">Pa</div>
+      <div class="p-mode-val">500</div>
+      <div class="p-mode-name">Normal</div>
+      <div class="p-mode-badge badge-low">Oddiy ish</div>
+    </div>
+    <div class="p-mode" onclick="selectMode(2)">
+      <div class="p-mode-unit">Pa</div>
+      <div class="p-mode-val">750</div>
+      <div class="p-mode-name">Yuqori</div>
+      <div class="p-mode-badge badge-mid">Faol rejim</div>
+    </div>
+    <div class="p-mode active" onclick="selectMode(3)">
+      <div class="p-mode-unit">Pa</div>
+      <div class="p-mode-val">900</div>
+      <div class="p-mode-name">Maksimal</div>
+      <div class="p-mode-badge badge-max">To'liq quvvat</div>
+    </div>
+  </div>
+
+  <!-- Mode info display -->
+  <div id="modeInfo" style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;">
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+      <div style="font-size:13px;font-weight:700;color:var(--text);">Tanlangan rejim:</div>
+      <div id="modeInfoVal" style="font-size:20px;font-weight:800;color:var(--red2);">900 Pa — Maksimal bosim</div>
+    </div>
+    <div id="modeInfoDesc" style="font-size:12px;color:var(--text2);margin-top:.5rem;">
+      Barcha agregatlar to'liq quvvatda ishlaydi. Stadium musobaqaga tayyorlash uchun maksimal bosim ta'minlanadi.
+    </div>
+  </div>
+
+  <!-- Aggregates -->
+  <div style="font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:1rem;">Havo Agregatlari</div>
+  <div class="agg-grid">
+    <div class="agg-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <div>
+          <div class="agg-model">ZK50</div>
+          <div class="agg-qty">2 × agregat</div>
+        </div>
+        <div style="background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.3);border-radius:8px;padding:4px 10px;font-size:11px;color:var(--blue2);font-weight:700;">Asosiy</div>
+      </div>
+      <div><span class="agg-kw text-blue">30</span><span class="agg-kw-unit"> kW / dona</span></div>
+      <div class="agg-total">Jami: <strong class="text-blue">60 kW</strong></div>
+      <div class="agg-vis">
+        <div class="agg-dot"></div>
+        <div class="agg-dot"></div>
+      </div>
+      <div style="margin-top:10px;">
+        <div style="font-size:11px;color:var(--text2);margin-bottom:4px;">Quvvat ulushi</div>
+        <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;">
+          <div style="width:19%;height:100%;background:var(--blue);border-radius:3px;"></div>
+        </div>
+        <div style="font-size:10px;color:var(--text2);margin-top:2px;">60 / 315 kW = 19%</div>
+      </div>
+    </div>
+    <div class="agg-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+        <div>
+          <div class="agg-model">ZK30</div>
+          <div class="agg-qty">2 × agregat</div>
+        </div>
+        <div style="background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.3);border-radius:8px;padding:4px 10px;font-size:11px;color:var(--cyan);font-weight:700;">Qo'shimcha</div>
+      </div>
+      <div><span class="agg-kw text-cyan">11</span><span class="agg-kw-unit"> kW / dona</span></div>
+      <div class="agg-total">Jami: <strong class="text-cyan">22 kW</strong></div>
+      <div class="agg-vis">
+        <div class="agg-dot" style="background:var(--cyan);opacity:.7;"></div>
+        <div class="agg-dot" style="background:var(--cyan);opacity:.7;"></div>
+      </div>
+      <div style="margin-top:10px;">
+        <div style="font-size:11px;color:var(--text2);margin-bottom:4px;">Quvvat ulushi</div>
+        <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;">
+          <div style="width:7%;height:100%;background:var(--cyan);border-radius:3px;"></div>
+        </div>
+        <div style="font-size:10px;color:var(--text2);margin-top:2px;">22 / 315 kW = 7%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Placeholder for control schematic -->
+  <div class="img-placeholder" style="height:120px;margin-top:1.5rem;">
+    <div class="ph-icon">🎛️</div>
+    <div>MetaSpace boshqaruv paneli sxemasi</div>
+  </div>
+</section>
+
+<!-- HVAC -->
+<section id="hvac">
+  <div class="sec-header">
+    <div>
+      <div class="sec-num">03 — Iqlim Tizimi</div>
+      <div class="sec-title">HVAC Sxemasi</div>
+      <div class="sec-desc">Haier Chiller va gidravlik nasoslar — mikroklimat ta'minoti</div>
+    </div>
+  </div>
+
+  <div class="hvac-grid">
+    <!-- Chillers -->
+    <div class="hvac-card">
+      <div class="hvac-header">
+        <div class="hvac-icon" style="background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3);">❄️</div>
+        <div>
+          <div style="font-size:14px;font-weight:800;color:var(--text);">Haier Chiller</div>
+          <div style="font-size:11px;color:var(--text2);">8 ta o'rnatilgan · Paralel ulangan</div>
+        </div>
+      </div>
+      <div class="hvac-body">
+        <div style="font-size:11px;color:var(--text2);margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.08em;">Chillerlar holati (bosing)</div>
+        <div class="chiller-dots" id="chillerDots"></div>
+        <div id="chillerStatus" style="font-size:12px;color:var(--green2);font-weight:600;margin-bottom:.75rem;">Barcha 8 chiller faol ✓</div>
+        <div class="info-row">
+          <span class="info-key">Ishlab chiqaruvchi</span>
+          <span class="info-val text-green">Haier</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Soni</span>
+          <span class="info-val">8 ta</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Ulash sxemasi</span>
+          <span class="info-val">Paralel</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Maqsad</span>
+          <span class="info-val">Sovutish · Iqlim</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Jami quvvat</span>
+          <span class="info-val text-green">~224 kW</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hydraulic pumps -->
+    <div class="hvac-card">
+      <div class="hvac-header">
+        <div class="hvac-icon" style="background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.3);">🌊</div>
+        <div>
+          <div style="font-size:14px;font-weight:800;color:var(--text);">Gidravlik Nasoslar</div>
+          <div style="font-size:11px;color:var(--text2);">4 ta · Sovuq suv sirkuLyatsiyasi</div>
+        </div>
+      </div>
+      <div class="hvac-body">
+        <div style="font-size:11px;color:var(--text2);margin-bottom:.5rem;text-transform:uppercase;letter-spacing:.08em;">Nasoslar (bosing)</div>
+        <div class="pump-dots" id="pumpDots"></div>
+        <div id="pumpStatus" style="font-size:12px;color:var(--cyan);font-weight:600;margin-bottom:.75rem;">4 ta nasos faol · 100% daraja ✓</div>
+        <div class="info-row">
+          <span class="info-key">Turi</span>
+          <span class="info-val text-cyan">Gidravlik</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Soni</span>
+          <span class="info-val">4 ta</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Vazifa</span>
+          <span class="info-val">Suv sirkuLyatsiyasi</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Tizim</span>
+          <span class="info-val">Chiller + Nasos</span>
+        </div>
+        <div class="info-row">
+          <span class="info-key">Zaxira</span>
+          <span class="info-val text-cyan">Bor (1 ta)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HVAC flow schematic placeholder -->
+  <div class="img-placeholder" style="height:140px;margin-top:1rem;">
+    <div class="ph-icon">🔄</div>
+    <div>HVAC sirkuLyatsiya sxemasi</div>
+    <div style="font-size:10px;opacity:.6">Chiller → Nasos → Sovutgich → Qayta → Chiller</div>
+  </div>
+</section>
+
+<!-- LIGHTING -->
+<section id="lighting">
+  <div class="sec-header">
+    <div>
+      <div class="sec-num">04 — Yoritish Tizimi</div>
+      <div class="sec-title">LED Yoritish Bloklar</div>
+      <div class="sec-desc">30 ta professional LED blok · Maydonga to'liq yoritish</div>
+    </div>
+    <div class="tag">9 kW jami</div>
+  </div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:1rem;">
+      <div>
+        <div style="font-size:12px;color:var(--text2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px;">30 ta LED blok · har biri 0.3 kW</div>
+        <div style="font-size:24px;font-weight:800;color:var(--amber2);">9.0 kW <span style="font-size:14px;color:var(--text2);">jami quvvat</span></div>
+      </div>
+      <button onclick="toggleAllLED()" style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);color:var(--amber2);font-size:12px;font-weight:700;padding:6px 14px;border-radius:8px;cursor:pointer;" id="ledToggleBtn">Hammasini o'chir</button>
+    </div>
+    <div class="led-grid" id="ledGrid"></div>
+    <div style="display:flex;gap:16px;margin-top:1rem;flex-wrap:wrap;">
+      <div style="font-size:12px;color:var(--text2);">Yongan: <strong id="ledOnCount" class="text-amber">30</strong></div>
+      <div style="font-size:12px;color:var(--text2);">O'chgan: <strong id="ledOffCount" style="color:var(--text3);">0</strong></div>
+      <div style="font-size:12px;color:var(--text2);">Faol quvvat: <strong id="ledPower" class="text-amber">9.0 kW</strong></div>
+    </div>
+  </div>
+</section>
+
+<!-- EMERGENCY -->
+<section id="emergency">
+  <div class="sec-header">
+    <div>
+      <div class="sec-num">05 — Favqulodda Rejim</div>
+      <div class="sec-title">Zaxira Elektr Ta'minoti</div>
+      <div class="sec-desc">Asosiy elektr uzilganda generatorlar avtomatik yoqiladi</div>
+    </div>
+  </div>
+
+  <!-- Emergency banner -->
+  <div class="emergency-banner">
+    <div class="emerg-title">⚡ Elektr Uzilish Holati Sxemasi</div>
+    <div class="emerg-desc">Asosiy tarmoq uzilishi bilan MetaSpace tizimi <strong style="color:var(--amber2);">2 soniya ichida</strong> Weichai WP4.1 generatorlarini avtomatik ishga tushiradi.</div>
+    <div class="emergency-toggle" style="margin-top:1rem;">
+      <button class="toggle-btn" id="emergBtn" onclick="toggleEmergency()">🔴 Avariya rejimini yoq</button>
+      <span class="em-status text-green" id="emergStatus">✓ Asosiy tarmoq faol</span>
+    </div>
+  </div>
+
+  <!-- Generators -->
+  <div class="gen-grid">
+    <div class="gen-card" id="gen1">
+      <div class="gen-model">Weichai WP4.1</div>
+      <div class="gen-name">Generator №1 — Zaxira</div>
+      <div><span class="gen-kw">113</span><span class="gen-kw-unit"> kW</span></div>
+      <div class="gen-bar"><div class="gen-bar-fill" id="gen1bar" style="width:0%"></div></div>
+      <div class="gen-info" id="gen1info">Kutish rejimida · Tayyor</div>
+      <div style="margin-top:.75rem;display:flex;gap:8px;flex-wrap:wrap;">
+        <div style="font-size:11px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:var(--red2);padding:3px 8px;border-radius:6px;">3 fazali</div>
+        <div style="font-size:11px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:var(--red2);padding:3px 8px;border-radius:6px;">Avtomatik start</div>
+        <div style="font-size:11px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:var(--red2);padding:3px 88px;border-radius:6px;">Dizel</div>
+      </div>
+    </div>
+    <div class="gen-card" id="gen2">
+      <div class="gen-model">Weichai WP4.1</div>
+      <div class="gen-name">Generator №2 — Zaxira</div>
+      <div><span class="gen-kw">113</span><span class="gen-kw-unit"> kW</span></div>
+      <div class="gen-bar"><div class="gen-bar-fill" id="gen2bar" style="width:0%"></div></div>
+      <div class="gen-info" id="gen2info">Kutish rejimida · Tayyor</div>
+      <div style="margin-top:.75rem;display:flex;gap:8px;flex-wrap:wrap;">
+        <div style="font-size:11px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:var(--red2);padding:3px 8px;border-radius:6px;">3 fazali</div>
+        <div style="font-size:11px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:var(--red2);padding:3px 8px;border-radius:6px;">Avtomatik start</div>
+        <div style="font-size:11px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:var(--red2);padding:3px 8px;border-radius:6px;">Dizel</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Switching diagram -->
+  <div class="switch-diagram">
+    <div class="sw-title" style="font-size:13px;font-weight:700;color:var(--text2);text-align:center;">Elektr uzatish sxemasi</div>
+    <div class="sw-row" id="flowDiagram">
+      <div class="sw-node active" id="fd-grid">🏙️ Tarmoq</div>
+      <div class="sw-arrow active" id="fd-a1"></div>
+      <div class="sw-node active" id="fd-switch">🔀 ATS Kaliti</div>
+      <div class="sw-arrow active" id="fd-a2"></div>
+      <div class="sw-node active" id="fd-load">🏟️ Stadion</div>
+    </div>
+    <div style="text-align:center;margin-top:1rem;">
+      <div style="font-size:11px;color:var(--text2);">Zaxira kuvvat: <strong class="text-red">113 + 113 = 226 kW</strong></div>
+    </div>
+    <div class="sw-time" id="switchTime">✓ Asosiy tarmoq · Uzluksiz ta'minot</div>
+  </div>
+
+  <!-- Placeholder -->
+  <div class="img-placeholder" style="height:120px;margin-top:1.5rem;">
+    <div class="ph-icon">⚡</div>
+    <div>Generator xonasi va elektr sxemasi rasmi</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">⬡ MetaSpace — Stadion Texnik Pasporti</div>
+    <div>Ushbu hujjat havo tayanchli zamonaviy stadionning texnik xususiyatlarini o'z ichiga oladi</div>
+    <div style="margin-top:.5rem;">O'lchamlar: <strong style="color:var(--blue2)">110 × 78 × 27 m</strong> · Jami quvvat: <strong style="color:var(--blue2)">315 kW</strong> · Zaxira: <strong style="color:var(--red2)">226 kW</strong></div>
+  </div>
+</footer>
+
+<script>
+// Power bars data
+const powerData = [
+  {name:'8 × Haier Chiller', kw:224, pct:71, color:'#10b981'},
+  {name:'2 × ZK50 agregat', kw:60, pct:19, color:'#3b82f6'},
+  {name:'2 × ZK30 agregat', kw:22, pct:7, color:'#06b6d4'},
+  {name:'30 × LED blok', kw:9, pct:3, color:'#f59e0b'},
+];
+const barsEl = document.getElementById('powerBars');
+powerData.forEach(d=>{
+  const row = document.createElement('div');
+  row.className='bar-row';
+  row.innerHTML=`<div class="bar-name">${d.name}</div>
+  <div class="bar-track"><div class="bar-fill" style="background:${d.color};width:0%" data-w="${d.pct}"></div></div>
+  <div class="bar-val" style="color:${d.color}">${d.kw} kW</div>`;
+  barsEl.appendChild(row);
+});
+setTimeout(()=>{
+  document.querySelectorAll('.bar-fill').forEach(el=>{
+    el.style.width=el.dataset.w+'%';
+  });
+},300);
+
+// Pressure mode
+const modeData = [
+  {pa:250, name:'Minimal bosim', desc:'Minimal rejim: faqat asosiy havo ta\'minotiga ZK30 agregatlari ishlaydi. Kam yuk va texnik ko\'rik paytida qo\'llaniladi.'},
+  {pa:500, name:'Normal bosim', desc:'Standart ish rejimi: ZK30 va bir ZK50 agregat ishlaydi. Kundalik foydalanish va mashg\'ulotlar uchun optimal.'},
+  {pa:750, name:'Yuqori bosim', desc:'Kuchaytirilgan rejim: barcha agregatlar to\'liq kuchda ishlaydi. Katta tadbirlar va musobaqalar uchun.'},
+  {pa:900, name:'Maksimal bosim', desc:'Barcha agregatlar to\'liq quvvatda ishlaydi. Stadium musobaqaga tayyorlash uchun maksimal bosim ta\'minlanadi.'},
+];
+function selectMode(idx){
+  document.querySelectorAll('.p-mode').forEach((el,i)=>{
+    el.classList.toggle('active',i===idx);
+  });
+  const d=modeData[idx];
+  document.getElementById('modeInfoVal').textContent=d.pa+' Pa — '+d.name;
+  document.getElementById('modeInfoVal').style.color=
+    idx===0?'var(--green2)':idx===1?'var(--cyan)':idx===2?'var(--amber2)':'var(--red2)';
+  document.getElementById('modeInfoDesc').textContent=d.desc;
+}
+
+// Chillers
+const chillerEl=document.getElementById('chillerDots');
+const chillerState=Array(8).fill(true);
+function renderChillers(){
+  chillerEl.innerHTML='';
+  chillerState.forEach((on,i)=>{
+    const d=document.createElement('div');
+    d.className='chiller-dot';
+    d.textContent='C'+(i+1);
+    d.style.background=on?'rgba(16,185,129,.15)':'rgba(74,88,120,.15)';
+    d.style.borderColor=on?'var(--green)':'var(--border)';
+    d.style.color=on?'var(--green2)':'var(--text3)';
+    d.onclick=()=>{chillerState[i]=!chillerState[i];renderChillers();};
+    chillerEl.appendChild(d);
+  });
+  const on=chillerState.filter(Boolean).length;
+  document.getElementById('chillerStatus').textContent=
+    on===8?'Barcha 8 chiller faol ✓':`${on} ta faol · ${8-on} ta to'xtatilgan`;
+  document.getElementById('chillerStatus').style.color=on<4?'var(--amber2)':'var(--green2)';
+}
+renderChillers();
+
+// Pumps
+const pumpEl=document.getElementById('pumpDots');
+const pumpState=Array(4).fill(true);
+function renderPumps(){
+  pumpEl.innerHTML='';
+  pumpState.forEach((on,i)=>{
+    const d=document.createElement('div');
+    d.className='pump-dot';
+    d.textContent='N'+(i+1);
+    d.style.background=on?'rgba(6,182,212,.15)':'rgba(74,88,120,.15)';
+    d.style.borderColor=on?'var(--cyan)':'var(--border)';
+    d.style.color=on?'var(--cyan)':'var(--text3)';
+    if(!on)d.style.animation='none';
+    d.onclick=()=>{pumpState[i]=!pumpState[i];renderPumps();};
+    pumpEl.appendChild(d);
+  });
+  const on=pumpState.filter(Boolean).length;
+  document.getElementById('pumpStatus').textContent=
+    on===4?`4 ta nasos faol · 100% daraja ✓`:`${on} ta nasos faol · ${Math.round(on/4*100)}% daraja`;
+}
+renderPumps();
+
+// LED lights
+const ledGrid=document.getElementById('ledGrid');
+const ledState=Array(30).fill(true);
+function renderLED(){
+  ledGrid.innerHTML='';
+  ledState.forEach((on,i)=>{
+    const d=document.createElement('div');
+    d.className='led-block';
+    d.textContent='L'+(i+1<10?'0':'')+(i+1);
+    d.style.background=on?'rgba(245,158,11,.15)':'rgba(30,45,69,.5)';
+    d.style.borderColor=on?'var(--amber)':'var(--border)';
+    d.style.color=on?'var(--amber2)':'var(--text3)';
+    if(on)d.style.boxShadow='0 0 6px rgba(245,158,11,.2)';
+    d.onclick=()=>{ledState[i]=!ledState[i];renderLED();};
+    ledGrid.appendChild(d);
+  });
+  const on=ledState.filter(Boolean).length;
+  document.getElementById('ledOnCount').textContent=on;
+  document.getElementById('ledOffCount').textContent=30-on;
+  document.getElementById('ledPower').textContent=(on*0.3).toFixed(1)+' kW';
+}
+renderLED();
+let ledAll=true;
+function toggleAllLED(){
+  ledAll=!ledAll;
+  for(let i=0;i<30;i++)ledState[i]=ledAll;
+  document.getElementById('ledToggleBtn').textContent=ledAll?'Hammasini o\'chir':'Hammasini yoq';
+  renderLED();
+}
+
+// Emergency
+let emergOn=false;
+function toggleEmergency(){
+  emergOn=!emergOn;
+  const btn=document.getElementById('emergBtn');
+  const status=document.getElementById('emergStatus');
+  if(emergOn){
+    btn.textContent='🟢 Asosiy tarmogini yoq';
+    btn.classList.add('on');
+    status.textContent='⚡ Avariya rejimi faol — Generatorlar ishlayapti';
+    status.style.color='var(--red2)';
+    document.getElementById('gen1bar').style.width='89%';
+    document.getElementById('gen2bar').style.width='89%';
+    document.getElementById('gen1info').textContent='🔴 Ishlayapti — 100.6 kW yuklama';
+    document.getElementById('gen1info').style.color='var(--red2)';
+    document.getElementById('gen2info').textContent='🔴 Ishlayapti — 100.6 kW yuklama';
+    document.getElementById('gen2info').style.color='var(--red2)';
+    document.getElementById('fd-grid').className='sw-node warn';
+    document.getElementById('fd-grid').innerHTML='⚠️ Tarmoq';
+    document.getElementById('fd-a1').className='sw-arrow emg';
+    document.getElementById('fd-switch').className='sw-node emg';
+    document.getElementById('fd-switch').innerHTML='⚡ Generatorlar';
+    document.getElementById('fd-a2').className='sw-arrow emg';
+    document.getElementById('switchTime').textContent='⚡ Avariya rejimi · Generatorlar 2 soniyada yondi · 226 kW ta\'minot';
+    document.getElementById('switchTime').style.background='rgba(239,68,68,.1)';
+    document.getElementById('switchTime').style.color='var(--red2)';
+    document.getElementById('switchTime').style.borderColor='rgba(239,68,68,.3)';
+  } else {
+    btn.textContent='🔴 Avariya rejimini yoq';
+    btn.classList.remove('on');
+    status.textContent='✓ Asosiy tarmoq faol';
+    status.style.color='var(--green2)';
+    document.getElementById('gen1bar').style.width='0%';
+    document.getElementById('gen2bar').style.width='0%';
+    document.getElementById('gen1info').textContent='Kutish rejimida · Tayyor';
+    document.getElementById('gen1info').style.color='var(--text2)';
+    document.getElementById('gen2info').textContent='Kutish rejimida · Tayyor';
+    document.getElementById('gen2info').style.color='var(--text2)';
+    document.getElementById('fd-grid').className='sw-node active';
+    document.getElementById('fd-grid').innerHTML='🏙️ Tarmoq';
+    document.getElementById('fd-a1').className='sw-arrow active';
+    document.getElementById('fd-switch').className='sw-node active';
+    document.getElementById('fd-switch').innerHTML='🔀 ATS Kaliti';
+    document.getElementById('fd-a2').className='sw-arrow active';
+    document.getElementById('switchTime').textContent='✓ Asosiy tarmoq · Uzluksiz ta\'minot';
+    document.getElementById('switchTime').style.background='rgba(16,185,129,.1)';
+    document.getElementById('switchTime').style.color='var(--green2)';
+    document.getElementById('switchTime').style.borderColor='rgba(16,185,129,.3)';
+  }
+}
+
+// Nav scrolling
+function scrollTo(id){
+  document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
+}
+// Active nav on scroll
+const sections=['hero','dashboard','control','hvac','lighting','emergency'];
+const navLinks=document.querySelectorAll('.nav-link');
+window.addEventListener('scroll',()=>{
+  let cur='hero';
+  sections.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el&&el.getBoundingClientRect().top<120)cur=id;
+  });
+  navLinks.forEach((l,i)=>{l.classList.toggle('active',sections[i]===cur);});
+},{ passive:true });
+</script>
+</body>
+</html>
